@@ -1,0 +1,271 @@
+<resources>
+    <string name="app_name">NutriVision</string>
+    <string name="title_home">Home</string>
+    <string name="title_recipes">Recipes</string>
+    <string name="title_profile">Profile</string>
+
+    <!--  Welcome  -->
+    <string name="welcome_title">Let\'s Get Started!</string>
+    <string name="welcome_subtitle">Let\'s dive into your account</string>
+    <string name="welcome_signup">Sign Up</string>
+    <string name="welcome_login">Log In</string>
+
+    <!--  Login Forms  -->
+    <string name="login_title">Welcome Back to NutriVision!</string>
+    <string name="login_subtitle">Track your meals, stay active, and stay on top of your health goals.</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_dont_have_an_account">Don\'t have an account?\u00A0</string>
+    <string name="login_signup">Sign up</string>
+
+    <!--  Signup Forms  -->
+    <string name="signup_title">Join NutriVision Today</string>
+    <string name="signup_subtitle">Create a NutriVision account to track your meals, stay active, and achieve your health goals.</string>
+    <string name="signup_email">Email</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_confirm_password">Confirm Password</string>
+    <string name="signup_already_have_an_account">Already have an account?\u00A0</string>
+    <string name="signup_login">Log in</string>
+
+    <string name="name_form_question">What\'s your name?</string>
+    <string name="name_form_placeholder">Enter your name&#8230;</string>
+    <string name="name_progress_status">1/7</string>
+
+    <string name="gender_form_question">What\'s your gender?</string>
+    <string name="gender_form_male_placeholder">Male ♂️</string>
+    <string name="gender_form_female_placeholder">Female ♀️</string>
+    <string name="gender_progress_status">2/7</string>
+
+    <string name="birthday_form_question">What\'s your birthday?</string>
+    <string name="birthday_day">Day</string>
+    <string name="birthday_month">Month</string>
+    <string name="birthday_year">Year</string>
+    <string name="birthday_progress_status">3/7</string>
+
+    <string name="height_form_question">How tall are you?</string>
+    <string name="height_form_placeholder">Enter your height (cm)</string>
+    <string name="height_progress_status">4/7</string>
+
+    <string name="weight_form_question">What\'s your current weight?</string>
+    <string name="weight_form_placeholder">Enter your weight (kg)</string>
+    <string name="weight_progress_status">5/7</string>
+
+    <string name="activity_level_form_question">What\'s your activity level?\n</string>
+    <string name="activity_level_sedentary">Sedentary 🪑💻</string>
+    <string name="activity_level_lightly_active">Lightly Active 🏡🧘‍</string>
+    <string name="activity_level_moderately_active">Moderately Active 🚶‍♂️💪</string>
+    <string name="activity_level_active">Active 🏃‍♂️🔥</string>
+    <string name="activity_level_very_active">Very Active 🏆🏃‍</string>
+    <string name="activity_level_progress_status">6/7</string>
+
+    <string name="main_goal_form_question">What\'s your main goal with NutriVision?</string>
+    <string name="main_goal_lose_weight">Lose Weight 🏃‍♀️🍏</string>
+    <string name="main_goal_maintain_weight">Maintain Weight ⚖️🥗</string>
+    <string name="main_goal_gain_weight">Gain Weight 🚴‍♂️🏋️</string>
+    <string name="main_goal_progress_status">7/7</string>
+
+    <!--  Personalization Activity  -->
+    <string name="personalization_title">Personalizing your NutriVision experience&#8230;</string>
+    <string name="personalization_subtitle">Hang tight! We\'re crafting a personalized\nplan just for you.</string>
+    <string name="personalization_progress_percent">%1$d%%</string>
+    <string name="personalization_status">Status…</string>
+
+    <!--  Calorie Plan Activity  -->
+    <string name="calorie_plan_title">Your personalized calorie\nplan is ready!</string>
+    <string name="calorie_plan_calorie">2560</string>
+    <string name="calorie_plan_kcal">kcal</string>
+    <string name="calorie_plan_carbs">Carbs</string>
+    <string name="calorie_plan_protein">Protein</string>
+    <string name="calorie_plan_fat">Fat</string>
+
+    <!--  Dashboard Fragment  -->
+    <string name="dashboard_greetings">Hello,</string>
+    <string name="dashboard_user_name">Aimar Maulana</string>
+
+    <string name="dashboard_count_your">Count Your\ </string>
+    <string name="dashboard_daily_calories">Daily Calories 🥑</string>
+    <string name="dashboard_eaten">Eaten\ </string>
+    <string name="dashboard_calories_eaten">2400</string>
+    <string name="dashboard_Kcal">\ Kcal</string>
+    <string name="dashboard_calories_remaining">100</string>
+    <string name="dashboard_kcal_left">Kcal left</string>
+
+    <string name="dashboard_carbs">Carbs</string>
+    <string name="dashboard_protein">Protein</string>
+    <string name="dashboard_fat">Fat</string>
+
+    <string name="dashboard_planned_meals">Planned Meals</string>
+
+    <string name="dashboard_breakfast"><b>🥐 Breakfast</b> (300 Kcal)</string>
+    <string name="dashboard_breakfast_total_kcal">(300 Kcal)</string>
+    <string name="dashboard_breakfast_meal1">Sambal Goreng Kentang</string>
+    <string name="dashboard_breakfast_meal1_kcal">100 Kcal ></string>
+    <string name="dashboard_breakfast_meal2">Ayam</string>
+    <string name="dashboard_breakfast_meal2_kcal">200 Kcal ></string>
+
+    <string name="dashboard_lunch"><b>🍖 Lunch</b> (-- Kcal)</string>
+    <string name="dashboard_dinner"><b>🍕 Dinner</b> (-- Kcal)</string>
+    <string name="dashboard_snacks"><b>🍟 Snacks</b> (-- Kcal)</string>
+
+    <!--  Meal Activity  -->
+    <string name="meal_type">Breakfast</string>
+    <string name="meal_search_placeholder">What\'s on your plate?</string>
+    <string name="meal_scan_a_meal">Scan a Meal</string>
+
+    <string name="food_name">Ayam Bakar</string>
+    <string name="food_info">188 Kcal . 100g | C: 0.0g . P: 28.7g . F: 7.4g</string>
+    <string name="food_no_foods">No foods found.</string>
+
+    <!--  Scan Meal Activity  -->
+    <string name="scan_meal_title">Scan Your Meal</string>
+    <string name="scan_meal_message">\"Scanning your meal helps you understand\nyour nutrition with just one tap.\"</string>
+
+    <!--  Scan Results Activity  -->
+    <string name="scan_results_title">Scan Results</string>
+    <string name="scan_results_no_results">No foods found.</string>
+    <string name="scan_results_done">Done</string>
+
+    <!--  Meal Details Activity  -->
+    <string name="meal_details_title">Meal Details</string>
+    <string name="meal_details_meal_name">Ayam Bakar</string>
+    <string name="meal_details_cals">Calories</string>
+    <string name="meal_details_c">Carbs</string>
+    <string name="meal_details_p">Protein</string>
+    <string name="meal_details_f">Fat</string>
+    <string name="meal_details_calories">188</string>
+    <string name="meal_details_carbs">0.0g</string>
+    <string name="meal_details_protein">28.7g</string>
+    <string name="meal_details_fat">7.4g</string>
+    <string name="meal_details_weight">100</string>
+    <string name="meal_details_grams">Grams (g)</string>
+    <string name="meal_details_update_meal">Update Meal</string>
+    <string name="meal_details_delete_meal">Delete</string>
+
+    <!--  Food Details Activity  -->
+    <string name="food_details_title">Food Detail</string>
+    <string name="food_details_food_name">Ayam Bakar</string>
+    <string name="food_details_cals">Calories</string>
+    <string name="food_details_c">Carbs</string>
+    <string name="food_details_p">Protein</string>
+    <string name="food_details_f">Fat</string>
+    <string name="food_details_calories">188</string>
+    <string name="food_details_carbs">0.0g</string>
+    <string name="food_details_protein">28.7g</string>
+    <string name="food_details_fat">7.4g</string>
+    <string name="food_details_weight">100</string>
+    <string name="food_details_grams">Grams (g)</string>
+    <string name="food_details_log_food">Log</string>
+
+    <!--  Recipe Fragment  -->
+    <string name="recipe_title">Recipes</string>
+    <string name="recipe_no_recipe">No recipes found.</string>
+
+    <string name="recipe_search_placeholder">Search for recipes</string>
+    <string name="recipe_recipe_name">Makaroni Ayam</string>
+    <string name="recipe_recipe_cals">🔥 147 Kcal</string>
+    <string name="recipe_recipe_carbs">🍞 18.8g</string>
+    <string name="recipe_recipe_protein">🍗 8.9g</string>
+    <string name="recipe_recipe_fat">🥑 3.8g</string>
+
+    <!--  Recipe Details Activity  -->
+    <string name="recipe_details_title">Recipe Detail</string>
+    <string name="recipe_details_image">Recipe Image</string>
+    <string name="recipe_details_name">Makaroni Ayam</string>
+    <string name="recipe_details_health_category">Healthy</string>
+    <string name="recipe_details_desc">Enak bangetttt.</string>
+    <string name="recipe_details_serving">5 Serving</string>
+
+    <string name="recipe_details_nutrition_info">🔥 Nutrition Info (per 1 serving)</string>
+    <string name="recipe_details_cals">Calories</string>
+    <string name="recipe_details_c">Carbs</string>
+    <string name="recipe_details_p">Protein</string>
+    <string name="recipe_details_f">Fat</string>
+    <string name="recipe_details_calories">147</string>
+    <string name="recipe_details_carbs">18.8g</string>
+    <string name="recipe_details_protein">8.9g</string>
+    <string name="recipe_details_fat">3.8g</string>
+
+    <string name="recipe_details_ingredients">🧀 Ingredients</string>
+    <string name="ingredients_bulleted">• 100 gram dada ayam\n\n• 1 mangkok,masak makaroni\n\n• 1 mangkok saus spageti tanpa daging\n\n• 100 gram bawang bombay dimasak\n\n• 1 sdt bawang putih bubuk\n\n• 1 sejumput lada hitam\n\n• 1 sejumput garam laut\n\n• 1 sdm saus sambal\n\n• 1 siung bawang putih dimasak</string>
+
+    <string name="recipe_details_instructions">🧑‍🍳 Instructions</string>
+    <string name="instructions_bulleted">• Potong bawang putih (1 siung), bawang bombay setengah aja.\n\n• Marinasi ayam dengan lada, bawang putih bubuk dan garam ayamnya di potong dadu ya.\n\n• Tumis bawang putih dan bawang bombay.\n\n• Masukkan ayam yang sudah dimarinasi.\n\n• Beri sedikit air.\n\n• Kemudian masukkan saus bolognese dan saus sambal 1 sendok.\n\n• Kemudian masak hingga air menyusut.\n\n• Tambah sedikit keju quick melt untuk hiasan aja sih hehe.</string>
+
+    <string name="recipe_details_comments">📫 Comments</string>
+    <string name="recipe_details_comment_placeholder">Enter your comment&#8230;</string>
+    <string name="recipe_details_commenter_name">Rina</string>
+    <string name="recipe_details_commenter_love">Lovin it!</string>
+    <string name="recipe_details_commenter_comments">Cocok untuk menu makan malam yang sehat dan ngga bikin begah</string>
+    <string name="recipe_details_no_comments">No comments.</string>
+
+    <!--  Profile Fragment  -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_user_name">Aimar Maulana</string>
+
+    <string name="profile_name">Name 🙋</string>
+    <string name="profile_name_text">Aimar Maulana</string>
+
+    <string name="profile_birthday_date">Birthday Date (Year-Month-Day) 📆</string>
+    <string name="profile_birthday_date_text">2004&#8211;08&#8211;03</string>
+
+    <string name="profile_age">Age 🎂</string>
+    <string name="profile_age_text">20</string>
+
+    <string name="profile_height">Height (cm) ⬆️</string>
+    <string name="profile_height_text">173</string>
+
+    <string name="profile_weight">Weight (kg) ⚖️</string>
+    <string name="profile_weight_text">68</string>
+
+    <string name="profile_activity_level">Activity Level 🏀</string>
+    <string name="profile_activity_level_placeholder">Select activity level</string>
+    <string-array name="activity_levels">
+        <item>Sedentary</item>
+        <item>Lightly Active</item>
+        <item>Moderately Active</item>
+        <item>Active</item>
+        <item>Very Active</item>
+    </string-array>
+
+    <string name="profile_main_goal">Main Goal 📈</string>
+    <string name="profile_main_goal_placeholder">Select your goal</string>
+    <string-array name="main_goals">
+        <item>Lose Weight</item>
+        <item>Maintain Weight</item>
+        <item>Gain Weight</item>
+    </string-array>
+
+    <string name="profile_logout">Log Out</string>
+    
+    <!--  BMI  -->
+    <string name="bmi_title">Your BMI</string>
+    <string name="bmi_value">19.4</string>
+    <string name="bmi_status">Healthy</string>
+    <string name="bmi_underweight">Underweight</string>
+    <string name="bmi_healthy">Healthy</string>
+    <string name="bmi_overweight">Overweight</string>
+    <string name="bmi_obesity_class_1">Obesity Class I</string>
+    <string name="bmi_obesity_class_2">Obesity Class II</string>
+
+    <!--  Buttons  -->
+    <string name="btn_signup">Sign Up</string>
+    <string name="btn_login">Log In</string>
+    <string name="btn_continue">Continue</string>
+    <string name="btn_finish">Finish</string>
+    <string name="btn_start_your_plan">Start Your Plan Now</string>
+    <string name="btn_comment">Comment</string>
+    <string name="btn_delete_meal">Delete Meal</string>
+    <string name="btn_update_profile">Update Profile</string>
+    <string name="btn_plus_log">+ Log</string>
+
+    <!--  Back Button  -->
+    <string name="back_button_content_description">ic arrow back</string>
+    <string name="scan_meal_content_description">ic scan meal</string>
+    <string name="scan_image">scan image</string>
+    <string name="add">ic add</string>
+
+    <!--  Custom Toast  -->
+    <string name="custom_toast_icon_content_description">Icon</string>
+    <string name="custom_toast_message">Message</string>
+
+</resources>

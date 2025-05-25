@@ -1,0 +1,55 @@
+package com.example.nutrivision.ui.signup
+
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.nutrivision.databinding.ActivityMainGoalBinding
+import com.google.android.material.chip.Chip
+
+class MainGoalActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainGoalBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMainGoalBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        supportActionBar?.hide()
+
+        val signupUser = if (Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra<SignupUser>(SignupActivity.EXTRA_SIGNUP_USER, SignupUser::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra<SignupUser>(SignupActivity.EXTRA_SIGNUP_USER)
+        }
+
+        binding.btnFinishMainGoal.setOnClickListener {
+            val selectedChipId = binding.chipGroupMainGoal.checkedChipId
+            if (selectedChipId == View.NO_ID) {
+                Toast.makeText(this, "Please select one main goal", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val selectedChip = findViewById<Chip>(selectedChipId)
+            val mainGoal = selectedChip.text.toString()
+            val selectedMainGoal = mainGoal.replace(Regex("[^A-Za-z ]"), "").trim()
+
+            signupUser?.mainGoal = selectedMainGoal
+
+            Log.d("MainGoalActivity", "SignupUser value:$signupUser")
+
+            val intent = Intent(this@MainGoalActivity, PersonalizationActivity::class.java)
+            intent.putExtra(SignupActivity.EXTRA_SIGNUP_USER, signupUser)
+            startActivity(intent)
+        }
+
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+}

@@ -70,11 +70,7 @@ class ScanMealActivity : AppCompatActivity() {
         val mealType = intent.getStringExtra(HomeFragment.EXTRA_MEAL_TYPE)
 
         scanMealViewModel.loading.observe(this) { isLoading ->
-            if (isLoading) {
-                showLoading(true)
-            } else {
-                showLoading(false)
-            }
+            binding.progressBar.visibility = if (isLoading) VISIBLE else GONE
         }
 
         scanMealViewModel.predictResponse.observe(this) { response ->
@@ -199,10 +195,6 @@ class ScanMealActivity : AppCompatActivity() {
             this,
             Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) VISIBLE else GONE
     }
 
     private fun freezeCameraPreview() {

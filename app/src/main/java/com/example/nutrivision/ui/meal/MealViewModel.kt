@@ -67,7 +67,6 @@ class MealViewModel(private val application: Application) : AndroidViewModel(app
         onResult: (Boolean, String?) -> Unit
     ) {
         val apiService = ApiConfig.getApiService()
-        _loading.value = true
 
         viewModelScope.launch {
             try {
@@ -88,8 +87,6 @@ class MealViewModel(private val application: Application) : AndroidViewModel(app
                                     }
                                 } catch (retryError: Exception) {
                                     Log.e("MealViewModel", "Retry failed: ${retryError.message}")
-                                } finally {
-                                    _loading.value = false
                                 }
                             }
                         } else {
@@ -100,8 +97,6 @@ class MealViewModel(private val application: Application) : AndroidViewModel(app
             } catch (e: Exception) {
                 Log.e("MealViewModel", "Exception: ${e.message}")
                 onResult(false, e.message)
-            } finally {
-                _loading.value = false
             }
         }
     }

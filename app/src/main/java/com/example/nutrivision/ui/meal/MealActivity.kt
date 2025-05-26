@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
@@ -18,6 +19,7 @@ import com.example.nutrivision.ui.fooddetail.FoodDetailActivity
 import com.example.nutrivision.ui.home.HomeFragment
 import com.example.nutrivision.ui.scanmeal.ScanMealActivity
 import com.example.nutrivision.utils.showToast
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -31,6 +33,8 @@ class MealActivity : AppCompatActivity() {
     }
 
     private lateinit var foodsAdapter: FoodsAdapter
+
+    private var searchJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +69,19 @@ class MealActivity : AppCompatActivity() {
             mealViewModel.fetchFoods()
         }
 
+        mealViewModel.loading.observe(this) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) VISIBLE else GONE
+            if (isLoading) binding.rvFoods.visibility = GONE
+            if (isLoading) binding.noFoods.visibility = GONE
+        }
+
         mealViewModel.foodsData.observe(this) { listFoods ->
+            Log.d("MealActivity", "listFoods: $listFoods")
             if (listFoods != null) {
                 if (listFoods.isNotEmpty()) {
-                    binding.noFoods.visibility = GONE
                     val sortedList = listFoods.sortedBy { it.id }
                     foodsAdapter.submitList(sortedList)
+                    binding.rvFoods.visibility = VISIBLE
                 } else {
                     binding.noFoods.visibility = VISIBLE
                     foodsAdapter.submitList(emptyList())
@@ -85,14 +96,18 @@ class MealActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s.toString()
+                searchJob?.cancel()
 
-                if (query.isNotEmpty()) {
-                    lifecycleScope.launch {
+                searchJob = lifecycleScope.launch {
+                    binding.progressBar.visibility = VISIBLE
+                    binding.rvFoods.visibility = GONE
+                    binding.noFoods.visibility = GONE
+                    delay(400)
+
+                    val query = s.toString()
+                    if (query.isNotEmpty()) {
                         mealViewModel.searchFood(query)
-                    }
-                } else {
-                    lifecycleScope.launch {
+                    } else {
                         mealViewModel.fetchFoods()
                         delay(500)
                         binding.rvFoods.smoothScrollToPosition(0)

@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nutrivision.databinding.FragmentRecipesBinding
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -24,6 +26,8 @@ class RecipesFragment : Fragment() {
     }
 
     private lateinit var recipesAdapter: RecipesAdapter
+
+    private var searchJob: Job? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -45,11 +49,18 @@ class RecipesFragment : Fragment() {
             recipesViewModel.fetchRecipes()
         }
 
+        recipesViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) VISIBLE else GONE
+            if (isLoading) binding.rvRecipes.visibility = GONE
+            if (isLoading) binding.noRecipes.visibility = GONE
+        }
+
         recipesViewModel.recipesData.observe(viewLifecycleOwner) { listRecipes ->
             if (listRecipes != null) {
                 if (listRecipes.isNotEmpty()) {
                     val sortedList = listRecipes.sortedBy { it.id }
                     recipesAdapter.submitList(sortedList)
+                    binding.rvRecipes.visibility = VISIBLE
                 } else {
                     recipesAdapter.submitList(emptyList())
                     binding.noRecipes.visibility = VISIBLE
@@ -64,14 +75,18 @@ class RecipesFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s.toString()
+                searchJob?.cancel()
 
-                if (query.isNotEmpty()) {
-                    lifecycleScope.launch {
+                searchJob = lifecycleScope.launch {
+                    binding.progressBar.visibility = VISIBLE
+                    binding.rvRecipes.visibility = GONE
+                    binding.noRecipes.visibility = GONE
+                    delay(400)
+
+                    val query = s.toString()
+                    if (query.isNotEmpty()) {
                         recipesViewModel.searchRecipe(query)
-                    }
-                } else {
-                    lifecycleScope.launch {
+                    } else {
                         recipesViewModel.fetchRecipes()
                         delay(500)
                         binding.rvRecipes.smoothScrollToPosition(0)

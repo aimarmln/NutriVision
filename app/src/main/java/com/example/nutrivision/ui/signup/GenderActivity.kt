@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nutrivision.databinding.ActivityGenderBinding
+import com.example.nutrivision.utils.showToast
 import com.google.android.material.chip.Chip
 
 class GenderActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class GenderActivity : AppCompatActivity() {
         binding.btnContinueGender.setOnClickListener {
             val selectedChipId = binding.chipGroupGender.checkedChipId
             if (selectedChipId == View.NO_ID) {
-                Toast.makeText(this, "Please select a gender", Toast.LENGTH_SHORT).show()
+                showToast(this, "Please select a gender")
                 return@setOnClickListener
             }
 

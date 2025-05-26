@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nutrivision.databinding.ActivityActivityLevelBinding
+import com.example.nutrivision.utils.showToast
 import com.google.android.material.chip.Chip
 
 class ActivityLevelActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class ActivityLevelActivity : AppCompatActivity() {
         binding.btnContinueActivityLevel.setOnClickListener {
             val selectedChipId = binding.chipGroupActivityLevel.checkedChipId
             if (selectedChipId == View.NO_ID) {
-                Toast.makeText(this, "Please select one activity level", Toast.LENGTH_SHORT).show()
+                showToast(this, "Please select one activity level")
                 return@setOnClickListener
             }
 

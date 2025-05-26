@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nutrivision.databinding.ActivityMainGoalBinding
+import com.example.nutrivision.utils.showToast
 import com.google.android.material.chip.Chip
 
 class MainGoalActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class MainGoalActivity : AppCompatActivity() {
         binding.btnFinishMainGoal.setOnClickListener {
             val selectedChipId = binding.chipGroupMainGoal.checkedChipId
             if (selectedChipId == View.NO_ID) {
-                Toast.makeText(this, "Please select one main goal", Toast.LENGTH_SHORT).show()
+                showToast(this, "Please select one main goal")
                 return@setOnClickListener
             }
 

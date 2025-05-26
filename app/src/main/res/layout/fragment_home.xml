@@ -139,7 +139,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:fontFamily="@font/hanken_grotesk_bold"
-                            android:text="@string/dashboard_calories_remaining"
                             android:textColor="#FFFFFF"
                             android:textSize="48sp"
                             android:textStyle="bold" />
@@ -149,7 +148,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/hanken_grotesk"
-                            android:text="@string/dashboard_kcal_left"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp" />
 

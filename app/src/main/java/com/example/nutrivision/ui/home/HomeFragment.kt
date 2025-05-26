@@ -1,11 +1,14 @@
 package com.example.nutrivision.ui.home
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
+import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
@@ -38,6 +41,8 @@ class HomeFragment : Fragment() {
     private lateinit var lunchItemMealAdapter: ItemMealAdapter
     private lateinit var dinnerItemMealAdapter: ItemMealAdapter
     private lateinit var snacksItemMealAdapter: ItemMealAdapter
+
+    private var hasAnimatedOnce = false
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -86,35 +91,65 @@ class HomeFragment : Fragment() {
                     binding.caloriesRemaining.text = caloriesSurplus.toString()
                     binding.caloriesRemainingText.text = "Kcal over"
 
-                    val redColor = ContextCompat.getColor(requireContext(), R.color.red)
+                    val redColor = ContextCompat.getColor(requireContext(), R.color.dark_magenta)
                     binding.caloriesRemaining.setTextColor(redColor)
+                    binding.caloriesProgressBar.progressDrawable.setTint(redColor)
                 } else {
                     binding.caloriesRemaining.text = caloriesRemaining.toString()
+                    binding.caloriesRemainingText.text = "Kcal left"
+
+                    val normalDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_progress_bar)
+                    binding.caloriesProgressBar.progressDrawable = normalDrawable
+
+                    val defaultColor = ContextCompat.getColor(requireContext(), R.color.white)
+                    binding.caloriesRemaining.setTextColor(defaultColor)
                 }
 
-                binding.caloriesProgressBar.max = response.user?.caloriesPerDay ?: 0
-                binding.caloriesProgressBar.progress = response.user?.caloriesEaten ?: 0
+                val caloriesMax = response.user?.caloriesPerDay ?: 0
+                val caloriesEaten = response.user?.caloriesEaten ?: 0
+                binding.caloriesProgressBar.max = caloriesMax
+                if (!hasAnimatedOnce) {
+                    animateProgressBar(binding.caloriesProgressBar, response.user?.caloriesEaten ?: 0)
+                } else {
+                    binding.caloriesProgressBar.progress = response.user?.caloriesEaten ?: 0
+                }
 
                 val carbsEaten = response.user?.carbohydratesEaten?.roundToInt()
                 val carbsPerDay = response.user?.carbohydratesPerDay?.roundToInt()
                 val carbsText = "$carbsEaten / ${carbsPerDay}g"
                 binding.tvCarbs.text = carbsText
                 binding.carbsProgressBar.max = carbsPerDay ?: 0
-                binding.carbsProgressBar.progress = carbsEaten ?: 0
+                if (!hasAnimatedOnce) {
+                    animateProgressBar(binding.carbsProgressBar, carbsEaten ?: 0)
+                } else {
+                    binding.carbsProgressBar.progress = carbsEaten ?: 0
+                }
 
                 val proteinsEaten = response.user?.proteinsEaten?.roundToInt()
                 val proteinsPerDay = response.user?.proteinsPerDay?.roundToInt()
                 val proteinText = "$proteinsEaten / ${proteinsPerDay}g"
                 binding.tvProtein.text = proteinText
                 binding.proteinProgressBar.max = proteinsPerDay ?: 0
-                binding.proteinProgressBar.progress = proteinsEaten ?: 0
+                binding.proteinProgressBar.max = proteinsPerDay ?: 0
+                if (!hasAnimatedOnce) {
+                    animateProgressBar(binding.proteinProgressBar, proteinsEaten ?: 0)
+                } else {
+                    binding.proteinProgressBar.progress = proteinsEaten ?: 0
+                }
 
                 val fatsEaten = response.user?.fatsEaten?.roundToInt()
                 val fatsPerDay = response.user?.fatsPerDay?.roundToInt()
                 val fatText = "$fatsEaten / ${fatsPerDay}g"
                 binding.tvFat.text = fatText
-                binding.fatProgressBar.max = response.user?.fatsPerDay?.roundToInt() ?: 0
-                binding.fatProgressBar.progress = response.user?.fatsEaten?.roundToInt() ?: 0
+                binding.fatProgressBar.max = fatsPerDay ?: 0
+                if (!hasAnimatedOnce) {
+                    animateProgressBar(binding.fatProgressBar, fatsEaten ?: 0)
+                } else {
+                    binding.fatProgressBar.progress = fatsEaten ?: 0
+                }
+
+                // Flag animated once
+                hasAnimatedOnce = true
 
                 // Meals
                 val caloriesFromBreakfast = response.mealLogs?.breakfast?.totalCalories
@@ -232,6 +267,14 @@ class HomeFragment : Fragment() {
         val intent = Intent(activity, MealActivity::class.java)
         intent.putExtra(EXTRA_MEAL_TYPE, mealType)
         startActivity(intent)
+    }
+
+    private fun animateProgressBar(progressBar: ProgressBar, targetProgress: Int, duration: Long = 1000L) {
+        ObjectAnimator.ofInt(progressBar, "progress", 0, targetProgress).apply {
+            this.duration = duration
+            interpolator = DecelerateInterpolator()
+            start()
+        }
     }
 
     override fun onResume() {

@@ -203,7 +203,7 @@
                     android:src="@drawable/ic_marker"
                     android:translationX="0dp"
                     android:translationY="-16dp"
-                    android:background="@android:color/black" />
+                    android:background="@color/grey" />
 
                 <!-- Legends -->
                 <LinearLayout

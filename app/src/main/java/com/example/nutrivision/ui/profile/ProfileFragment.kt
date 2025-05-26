@@ -1,5 +1,6 @@
 package com.example.nutrivision.ui.profile
 
+import android.animation.ObjectAnimator
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -83,7 +84,12 @@ class ProfileFragment : Fragment() {
                     val barWidth = binding.bmiBarContainer.width
                     val relativePosition = (bmiUser - bmiMin) / bmiRange
                     val markerX = (barWidth * relativePosition) - (binding.bmiMarker.width / 2)
-                    binding.bmiMarker.translationX = markerX.coerceIn(0f, barWidth - binding.bmiMarker.width.toFloat())
+                    val finalPosition = markerX.coerceIn(0f, barWidth - binding.bmiMarker.width.toFloat())
+                    binding.bmiMarker.animate()
+                        .translationX(finalPosition)
+                        .setDuration(800L)
+                        .setInterpolator(android.view.animation.AccelerateDecelerateInterpolator())
+                        .start()
                 }
 
                 binding.edtName.setText(response.name)

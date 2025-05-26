@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
@@ -42,13 +45,17 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         val pref = SettingPreferences.getInstance(requireContext().dataStore)
 
         lifecycleScope.launch {
             val accessToken = pref.accessToken.first() ?: "Unknown access token"
             val refreshToken = pref.refreshToken.first() ?: "Unknown refresh token"
             profileViewModel.fetchUserProfile(accessToken, refreshToken)
+        }
+
+        profileViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) VISIBLE else GONE
+            binding.bmiCard.visibility = if (isLoading) INVISIBLE else VISIBLE
         }
 
         profileViewModel.userData.observe(viewLifecycleOwner) { response ->

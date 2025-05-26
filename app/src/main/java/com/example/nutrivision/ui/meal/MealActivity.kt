@@ -76,15 +76,14 @@ class MealActivity : AppCompatActivity() {
         }
 
         mealViewModel.foodsData.observe(this) { listFoods ->
-            Log.d("MealActivity", "listFoods: $listFoods")
             if (listFoods != null) {
                 if (listFoods.isNotEmpty()) {
                     val sortedList = listFoods.sortedBy { it.id }
                     foodsAdapter.submitList(sortedList)
                     binding.rvFoods.visibility = VISIBLE
                 } else {
-                    binding.noFoods.visibility = VISIBLE
                     foodsAdapter.submitList(emptyList())
+                    binding.noFoods.visibility = VISIBLE
                 }
             } else {
                 binding.noFoods.visibility = VISIBLE

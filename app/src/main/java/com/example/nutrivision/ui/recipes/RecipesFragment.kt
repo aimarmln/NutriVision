@@ -3,6 +3,7 @@ package com.example.nutrivision.ui.recipes
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -28,6 +29,7 @@ class RecipesFragment : Fragment() {
     private lateinit var recipesAdapter: RecipesAdapter
 
     private var searchJob: Job? = null
+    private var shouldTriggerSearch = false
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -75,6 +77,8 @@ class RecipesFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!shouldTriggerSearch) return
+
                 searchJob?.cancel()
 
                 searchJob = lifecycleScope.launch {
@@ -87,6 +91,7 @@ class RecipesFragment : Fragment() {
                     if (query.isNotEmpty()) {
                         recipesViewModel.searchRecipe(query)
                     } else {
+                        Log.d("RecipesFragment", "onTextChanged: ")
                         recipesViewModel.fetchRecipes()
                         delay(500)
                         binding.rvRecipes.smoothScrollToPosition(0)
@@ -96,6 +101,10 @@ class RecipesFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        binding.edtSearch.post {
+            shouldTriggerSearch = true
+        }
 
         return root
     }

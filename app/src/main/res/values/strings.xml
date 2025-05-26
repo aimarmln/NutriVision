@@ -96,7 +96,7 @@
 
     <string name="dashboard_planned_meals">Planned Meals</string>
 
-    <string name="dashboard_breakfast"><b>🥐 Breakfast</b> (300 Kcal)</string>
+    <string name="dashboard_breakfast"><b>🥐 Breakfast</b> (-- Kcal)</string>
     <string name="dashboard_breakfast_total_kcal">(300 Kcal)</string>
     <string name="dashboard_breakfast_meal1">Sambal Goreng Kentang</string>
     <string name="dashboard_breakfast_meal1_kcal">100 Kcal ></string>
@@ -202,22 +202,22 @@
     <string name="profile_title">Profile</string>
     <string name="profile_user_name">Aimar Maulana</string>
 
-    <string name="profile_name">Name 🙋</string>
+    <string name="profile_name">🙋 Name</string>
     <string name="profile_name_text">Aimar Maulana</string>
 
-    <string name="profile_birthday_date">Birthday Date (Year-Month-Day) 📆</string>
+    <string name="profile_birthday_date">📆 Birthday Date (Year-Month-Day)</string>
     <string name="profile_birthday_date_text">2004&#8211;08&#8211;03</string>
 
-    <string name="profile_age">Age 🎂</string>
+    <string name="profile_age">🎂 Age</string>
     <string name="profile_age_text">20</string>
 
-    <string name="profile_height">Height (cm) ⬆️</string>
+    <string name="profile_height">⬆️ Height (cm)</string>
     <string name="profile_height_text">173</string>
 
-    <string name="profile_weight">Weight (kg) ⚖️</string>
+    <string name="profile_weight">⚖️ Weight (kg)</string>
     <string name="profile_weight_text">68</string>
 
-    <string name="profile_activity_level">Activity Level 🏀</string>
+    <string name="profile_activity_level">🏀 Activity Level</string>
     <string name="profile_activity_level_placeholder">Select activity level</string>
     <string-array name="activity_levels">
         <item>Sedentary</item>
@@ -227,7 +227,7 @@
         <item>Very Active</item>
     </string-array>
 
-    <string name="profile_main_goal">Main Goal 📈</string>
+    <string name="profile_main_goal">📈 Main Goal</string>
     <string name="profile_main_goal_placeholder">Select your goal</string>
     <string-array name="main_goals">
         <item>Lose Weight</item>

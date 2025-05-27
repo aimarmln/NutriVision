@@ -41,19 +41,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             delay(2000)
-
-//            binding.progressBar.visibility = VISIBLE
-//            val startAnimator = ValueAnimator.ofInt(0, 70)
-//            startAnimator.duration = 1000
-//            startAnimator.interpolator = AccelerateDecelerateInterpolator()
-//            startAnimator.addUpdateListener {
-//                binding.progressBar.progress = it.animatedValue as Int
-//            }
-//            startAnimator.start()
-//
-//            startAnimator.doOnEnd {
-//                recipesViewModel.fetchRecipes()
-//            }
             binding.progressBar.visibility = VISIBLE
             animateProgress(0, 70, 1000) {
                 recipesViewModel.fetchRecipes()
@@ -63,26 +50,6 @@ class SplashScreenActivity : AppCompatActivity() {
         recipesViewModel.recipesData.observe(this) { listRecipes ->
             if (listRecipes != null) {
                 lifecycleScope.launch {
-//                    val endAnimator = ValueAnimator.ofInt(70, 100)
-//                    endAnimator.duration = 800
-//                    endAnimator.interpolator = AccelerateDecelerateInterpolator()
-//                    endAnimator.addUpdateListener {
-//                        binding.progressBar.progress = it.animatedValue as Int
-//                    }
-//                    endAnimator.start()
-//
-//                    endAnimator.doOnEnd {
-//                        lifecycleScope.launch {
-//                            val isLoggedIn = pref.isLoggedIn.first()
-//                            val intent = if (isLoggedIn) {
-//                                Intent(this@SplashScreenActivity, MainActivity::class.java)
-//                            } else {
-//                                Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
-//                            }
-//                            startActivity(intent)
-//                            finish()
-//                        }
-//                    }
                     animateProgress(70, 100, 800) {
                         lifecycleScope.launch {
                             val isLoggedIn = pref.isLoggedIn.first()

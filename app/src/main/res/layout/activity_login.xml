@@ -82,8 +82,7 @@
         android:fontFamily="@font/hanken_grotesk_light"
         android:hint="@string/login_email"
         android:inputType="textEmailAddress"
-        android:paddingStart="72dp"
-        android:paddingEnd="24dp"
+        android:paddingHorizontal="72dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -127,13 +126,22 @@
         android:fontFamily="@font/hanken_grotesk_light"
         android:hint="@string/login_password"
         android:inputType="textPassword"
-        android:paddingStart="72dp"
-        android:paddingEnd="24dp"
+        android:paddingHorizontal="72dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtEmailLogin" />
+
+    <ImageView
+        android:id="@+id/btnEye"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/edtPasswordLogin"
+        app:layout_constraintTop_toTopOf="@+id/edtPasswordLogin"
+        app:srcCompat="@drawable/ic_eye_slash" />
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -2,11 +2,15 @@ package com.example.nutrivision.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.nutrivision.MainActivity
+import com.example.nutrivision.R
 import com.example.nutrivision.data.local.SettingPreferences
 import com.example.nutrivision.data.local.dataStore
 import com.example.nutrivision.databinding.ActivityLoginBinding
@@ -21,6 +25,8 @@ class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory()
     }
+
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +93,22 @@ class LoginActivity : AppCompatActivity() {
                     loginViewModel.login(email, password)
                 }
             }
+        }
+
+        val hankenTypeface = ResourcesCompat.getFont(this, R.font.hanken_grotesk_light)
+
+        binding.btnEye.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                binding.edtPasswordLogin.inputType = InputType.TYPE_CLASS_TEXT
+                binding.btnEye.setImageResource(R.drawable.ic_eye)
+            } else {
+                binding.edtPasswordLogin.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.btnEye.setImageResource(R.drawable.ic_eye_slash)
+            }
+
+            binding.edtPasswordLogin.typeface = hankenTypeface
+            binding.edtPasswordLogin.setSelection(binding.edtPasswordLogin.text.length)
         }
 
         binding.backButton.setOnClickListener {

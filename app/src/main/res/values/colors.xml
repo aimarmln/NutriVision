@@ -23,13 +23,6 @@
     <color name="carbs">#4CAF50</color>
     <color name="protein">#FF9800</color>
     <color name="fat">#9C27B0</color>
-<!--    <color name="black">#212121</color>-->
-<!--    <color name="white">#FFFFFF</color>-->
-
-    <!--  Macronutriens  -->
-<!--    <color name="carbs">#E1383D</color>-->
-<!--    <color name="protein">#F59726</color>-->
-<!--    <color name="fat">#1D94F2</color>-->
 
     <!--  BMI  -->
     <color name="bmi_underweight">#3B82F6</color>

@@ -2,10 +2,13 @@ package com.example.nutrivision.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.nutrivision.R
 import com.example.nutrivision.ui.login.LoginActivity
 import com.example.nutrivision.databinding.ActivitySignupBinding
 import kotlinx.coroutines.launch
@@ -23,6 +26,9 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private lateinit var signupUser: SignupUser
+
+    private var isPasswordVisible = false
+    private var isConfirmPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +106,40 @@ class SignupActivity : AppCompatActivity() {
                     signupViewModel.checkEmailExists(email)
                 }
             }
+        }
+
+        val hankenTypeface = ResourcesCompat.getFont(this, R.font.hanken_grotesk_light)
+
+        binding.btnEyePassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                binding.edtPasswordSignup.inputType = InputType.TYPE_CLASS_TEXT
+                binding.btnEyePassword.setImageResource(R.drawable.ic_eye)
+            } else {
+                binding.edtPasswordSignup.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.btnEyePassword.setImageResource(R.drawable.ic_eye_slash)
+            }
+
+            binding.edtPasswordSignup.typeface = hankenTypeface
+            binding.edtPasswordSignup.setSelection(binding.edtPasswordSignup.text.length)
+        }
+
+        binding.btnEyeConfirm.setOnClickListener {
+            isConfirmPasswordVisible = !isConfirmPasswordVisible
+            if (isConfirmPasswordVisible) {
+                binding.edtConfirmPasswordSignup.inputType = InputType.TYPE_CLASS_TEXT
+                binding.btnEyeConfirm.setImageResource(R.drawable.ic_eye)
+            } else {
+                binding.edtConfirmPasswordSignup.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.btnEyeConfirm.setImageResource(R.drawable.ic_eye_slash)
+            }
+
+            binding.edtConfirmPasswordSignup.typeface = hankenTypeface
+            binding.edtConfirmPasswordSignup.setSelection(binding.edtConfirmPasswordSignup.text.length)
+        }
+
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         binding.backButton.setOnClickListener {

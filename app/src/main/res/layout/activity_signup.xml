@@ -135,6 +135,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtEmailSignup" />
 
+    <ImageView
+        android:id="@+id/btnEyePassword"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/edtPasswordSignup"
+        app:layout_constraintTop_toTopOf="@+id/edtPasswordSignup"
+        app:srcCompat="@drawable/ic_eye_slash" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -180,6 +191,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPasswordSignup" />
+
+    <ImageView
+        android:id="@+id/btnEyeConfirm"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/edtConfirmPasswordSignup"
+        app:layout_constraintTop_toTopOf="@+id/edtConfirmPasswordSignup"
+        app:srcCompat="@drawable/ic_eye_slash" />
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -203,6 +203,7 @@
         app:srcCompat="@drawable/ic_eye_slash" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -218,8 +219,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/hanken_grotesk"
-            android:textColor="@color/black"
             android:text="@string/signup_already_have_an_account"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -232,6 +233,20 @@
             android:textColor="@color/purple_tint"
             android:textSize="16sp" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:indeterminate="true"
+        android:indeterminateTint="#838DE7"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignup"

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -57,6 +59,10 @@ class SignupActivity : AppCompatActivity() {
             } else {
                 Log.d("SignupActivity", "Data is empty for email response")
             }
+        }
+
+        signupViewModel.loading.observe(this) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) VISIBLE else GONE
         }
 
         binding.tvLoginLink.setOnClickListener {

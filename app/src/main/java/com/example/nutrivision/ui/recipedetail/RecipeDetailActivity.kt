@@ -60,6 +60,7 @@ class RecipeDetailActivity: AppCompatActivity() {
                 binding.recipeImage.setImageResource(imageResId)
 
                 binding.recipeName.text = recipeDetail.recipeName ?: "Unknown recipe name"
+                binding.recipeLikes.text = "🤍 ${recipeDetail.likes}" ?: "Unknown recipe likes"
                 binding.recipeDescription.text = recipeDetail.description ?: "Unknown description"
                 binding.recipeServing.text = "${recipeDetail.servingYield} Servings" ?: "Unknown serving"
 

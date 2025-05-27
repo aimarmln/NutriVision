@@ -39,6 +39,7 @@ class RecipesAdapter : ListAdapter<RecipesResponseItem, RecipesAdapter.RecipesVi
             binding.recipeImage.setImageResource(imageResId)
 
             binding.recipeName.text = recipe.recipeName ?: "Unknown name"
+            binding.recipeLikes.text = "🤍 ${recipe.likes}" ?: "Unknown likes"
             binding.recipeCalories.text = "🔥 ${recipe.caloriesPerServingKcal} Kcal" ?: "Unknown calories"
 
             if (recipe.healthCategory == "Healthy") {

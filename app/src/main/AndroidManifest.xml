@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <!--  android:usesCleartextTraffic="true"  -->
     <application
         android:name=".NutriVisionApp"
         android:usesCleartextTraffic="true"

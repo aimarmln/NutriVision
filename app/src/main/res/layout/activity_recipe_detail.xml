@@ -68,7 +68,7 @@
 
                 <TextView
                     android:id="@+id/recipeName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/hanken_grotesk_bold"
@@ -79,23 +79,8 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/recipeHealthCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_chip_healthy"
-                    android:fontFamily="@font/hanken_grotesk_bold"
-                    android:text="@string/recipe_details_health_category"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/recipeName"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
                     android:id="@+id/recipeDescription"
-                    android:layout_width="wrap_content"
+                    android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:fontFamily="@font/hanken_grotesk"
@@ -391,9 +376,36 @@
                     app:layout_constraintStart_toStartOf="@+id/edtComment"
                     app:layout_constraintTop_toBottomOf="@+id/edtComment" />
 
+                <TextView
+                    android:id="@+id/recipeLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_chip_lovin_it"
+                    android:fontFamily="@font/hanken_grotesk_bold"
+                    android:text="@string/recipe_likes"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/recipeHealthCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_chip_healthy"
+            android:fontFamily="@font/hanken_grotesk_bold"
+            android:text="@string/recipe_details_health_category"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipeImage"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

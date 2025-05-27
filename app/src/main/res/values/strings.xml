@@ -166,6 +166,7 @@
     <string name="recipe_recipe_carbs">🍞 18.8g</string>
     <string name="recipe_recipe_protein">🍗 8.9g</string>
     <string name="recipe_recipe_fat">🥑 3.8g</string>
+    <string name="recipe_likes">🤍 0</string>
 
     <!--  Recipe Details Activity  -->
     <string name="recipe_details_title">Recipe Detail</string>

@@ -84,6 +84,7 @@ class ScanMealActivity : AppCompatActivity() {
         }
 
         binding.btnScan.setOnClickListener {
+            binding.progressBar.visibility = VISIBLE
             binding.btnScan.isEnabled = false
             freezeCameraPreview()
             takePhotoAndPredict(pref)

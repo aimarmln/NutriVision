@@ -60,7 +60,7 @@ class RecipesFragment : Fragment() {
         recipesViewModel.recipesData.observe(viewLifecycleOwner) { listRecipes ->
             if (listRecipes != null) {
                 if (listRecipes.isNotEmpty()) {
-                    val sortedList = listRecipes.sortedBy { it.id }
+                    val sortedList = listRecipes.sortedByDescending { it.likes }
                     recipesAdapter.submitList(sortedList)
                     binding.rvRecipes.visibility = VISIBLE
                 } else {

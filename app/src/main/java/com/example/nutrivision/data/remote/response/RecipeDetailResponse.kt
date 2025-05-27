@@ -34,6 +34,9 @@ data class RecipeDetailResponse(
 	@field:SerializedName("id")
 	val id: Int? = null,
 
+	@field:SerializedName("positive_comment_count")
+	val likes: Int? = null,
+
 	@field:SerializedName("fat_per_serving_g")
 	val fatPerServingG: Any? = null,
 

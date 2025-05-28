@@ -47,6 +47,15 @@ class RecipeDetailActivity: AppCompatActivity() {
             recipeDetailViewModel.fetchRecipeDetail(recipeId)
         }
 
+        recipeDetailViewModel.loading.observe(this) { isLoading ->
+            if (isLoading) {
+                binding.progressBar.visibility = VISIBLE
+            } else {
+                binding.progressBar.visibility = GONE
+                binding.btnComment.visibility = VISIBLE
+            }
+        }
+
         recipeDetailViewModel.recipeDetailData.observe(this) { recipeDetail ->
             if (recipeDetail != null) {
                 Log.d("RecipeDetailActivity", "Data for RecyclerView: $recipeDetail")
@@ -111,6 +120,9 @@ class RecipeDetailActivity: AppCompatActivity() {
                 recipeId = recipeId,
                 text = text
             )
+
+            binding.btnComment.visibility = GONE
+            binding.progressBar.visibility = VISIBLE
 
             lifecycleScope.launch {
                 val accessToken = pref.accessToken.first() ?: "Unknown access token"

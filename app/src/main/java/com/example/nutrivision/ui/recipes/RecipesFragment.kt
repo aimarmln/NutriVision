@@ -109,6 +109,13 @@ class RecipesFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            recipesViewModel.fetchRecipes()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

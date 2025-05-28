@@ -70,7 +70,7 @@ class RecipeDetailViewModel(private val application: Application) : AndroidViewM
                                         onResult(false, "Update failed after token refresh")
                                     }
                                 } catch (retryError: Exception) {
-                                    Log.e("ProfileViewModel", "Retry failed: ${retryError.message}")
+                                    Log.e("RecipeDetailViewModel", "Retry failed: ${retryError.message}")
                                 } finally {
                                     _loading.value = false
                                 }
@@ -81,7 +81,7 @@ class RecipeDetailViewModel(private val application: Application) : AndroidViewM
                     }
                 }
             } catch (e: Exception) {
-                Log.e("ProfileViewModel", "Exception: ${e.message}")
+                Log.e("RecipeDetailViewModel", "Exception: ${e.message}")
                 onResult(false, e.message)
             } finally {
                 _loading.value = false

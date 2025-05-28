@@ -144,10 +144,7 @@
         android:id="@+id/btnStartYourPlan"
         android:layout_width="345dp"
         android:layout_height="58dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="760dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="57dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/button_gradient"
         android:fontFamily="@font/hanken_grotesk_bold"
         android:text="@string/btn_start_your_plan"
@@ -156,8 +153,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

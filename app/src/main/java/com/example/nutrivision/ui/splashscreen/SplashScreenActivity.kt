@@ -9,11 +9,14 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.nutrivision.MainActivity
 import com.example.nutrivision.data.local.SettingPreferences
 import com.example.nutrivision.data.local.dataStore
 import com.example.nutrivision.databinding.ActivitySplashBinding
+import com.example.nutrivision.ui.home.HomeViewModel
+import com.example.nutrivision.ui.home.HomeViewModelFactory
 import com.example.nutrivision.ui.recipes.RecipesViewModel
 import com.example.nutrivision.ui.recipes.RecipesViewModelFactory
 import com.example.nutrivision.ui.welcome.WelcomeActivity
@@ -28,6 +31,10 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private val recipesViewModel: RecipesViewModel by viewModels {
         RecipesViewModelFactory()
+    }
+
+    private val homeViewModel: HomeViewModel by viewModels {
+        HomeViewModelFactory(application)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,16 +60,26 @@ class SplashScreenActivity : AppCompatActivity() {
                     animateProgress(70, 100, 800) {
                         lifecycleScope.launch {
                             val isLoggedIn = pref.isLoggedIn.first()
-                            val intent = if (isLoggedIn) {
-                                Intent(this@SplashScreenActivity, MainActivity::class.java)
+                            if (isLoggedIn) {
+                                val accessToken = pref.accessToken.first() ?: "Unknown access token"
+                                val refreshToken = pref.refreshToken.first() ?: "Unknown refresh token"
+                                homeViewModel.home(accessToken, refreshToken)
                             } else {
-                                Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
+                                val intent = Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
+                                startActivity(intent)
+                                finish()
                             }
-                            startActivity(intent)
-                            finish()
                         }
                     }
                 }
+            }
+        }
+
+        homeViewModel.homeData.observe(this) { response ->
+            if (response != null) {
+                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }

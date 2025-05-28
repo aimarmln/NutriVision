@@ -96,10 +96,10 @@
                     android:id="@+id/tvCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/hanken_grotesk_bold"
                     android:text="@string/meal_details_calories"
                     android:textColor="#FF7A00"
                     android:textSize="32sp"
-                    android:fontFamily="@font/hanken_grotesk_bold"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -122,9 +122,9 @@
                     android:id="@+id/tvCarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/hanken_grotesk"
                     android:text="@string/meal_details_carbs"
                     android:textSize="20sp"
-                    android:fontFamily="@font/hanken_grotesk"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -147,9 +147,9 @@
                     android:id="@+id/tvProtein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/hanken_grotesk"
                     android:text="@string/meal_details_protein"
                     android:textSize="20sp"
-                    android:fontFamily="@font/hanken_grotesk"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -172,9 +172,9 @@
                     android:id="@+id/tvFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/hanken_grotesk"
                     android:text="@string/meal_details_fat"
                     android:textSize="20sp"
-                    android:fontFamily="@font/hanken_grotesk"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -201,11 +201,11 @@
         android:background="@drawable/edittext_border_comment"
         android:ems="10"
         android:fontFamily="@font/hanken_grotesk"
-        android:text="@string/meal_details_weight"
         android:inputType="number"
         android:paddingHorizontal="60dp"
-        android:textSize="18sp"
+        android:text="@string/meal_details_weight"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
@@ -216,13 +216,13 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/edittext_border_comment"
         android:ems="10"
+        android:enabled="false"
         android:fontFamily="@font/hanken_grotesk"
-        android:text="@string/meal_details_grams"
         android:inputType="number"
         android:paddingHorizontal="16dp"
+        android:text="@string/meal_details_grams"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
@@ -230,9 +230,7 @@
         android:id="@+id/btnUpdate"
         android:layout_width="345dp"
         android:layout_height="52dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="360dp"
-        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/button_gradient_update"
         android:fontFamily="@font/hanken_grotesk_bold"
         android:text="@string/meal_details_update_meal"
@@ -241,9 +239,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtWeight"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

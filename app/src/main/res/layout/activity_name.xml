@@ -21,13 +21,13 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="29dp"
         android:max="7"
         android:progress="1"
         android:progressTint="#5263F8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -59,8 +59,6 @@
         android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:layout_marginTop="416dp"
-        android:layout_marginBottom="267dp"
         android:background="@drawable/edittext_border"
         android:ems="10"
         android:fontFamily="@font/hanken_grotesk_light"
@@ -72,16 +70,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinueName"
         android:layout_width="345dp"
         android:layout_height="58dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="760dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="57dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/button_gradient"
         android:fontFamily="@font/hanken_grotesk_bold"
         android:text="@string/btn_continue"
@@ -90,8 +85,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

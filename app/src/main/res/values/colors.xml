@@ -33,4 +33,6 @@
 
     <!--  Health Category  -->
     <color name="healthy">#4CAF50</color>
+
+    <color name="purple_gradient_start">#5263F8</color>
 </resources>

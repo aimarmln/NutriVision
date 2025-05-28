@@ -11,6 +11,9 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -45,6 +48,11 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_gradient_start)
+        val window = requireActivity().window
+        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+        insetsController.isAppearanceLightStatusBars = false
 
         val pref = SettingPreferences.getInstance(requireContext().dataStore)
 
@@ -232,6 +240,24 @@ class ProfileFragment : Fragment() {
         val intent = Intent(requireActivity(), WelcomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.purple_gradient_start)
+        val window = requireActivity().window
+        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+        insetsController.isAppearanceLightStatusBars = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.white)
+        val window = requireActivity().window
+        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+        insetsController.isAppearanceLightStatusBars = true
     }
 
     override fun onDestroyView() {

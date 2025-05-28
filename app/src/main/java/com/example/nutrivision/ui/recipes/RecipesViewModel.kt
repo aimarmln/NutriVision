@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.nutrivision.data.remote.api.ApiConfig
 import com.example.nutrivision.data.remote.response.RecipesResponseItem
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -19,20 +20,48 @@ class RecipesViewModel : ViewModel() {
     private val _recipesData = MutableLiveData<List<RecipesResponseItem>?>()
     val recipesData: LiveData<List<RecipesResponseItem>?> get() = _recipesData
 
+//    fun fetchRecipes() {
+//        val apiService = ApiConfig.getApiService()
+//        _loading.value = true
+//
+//        viewModelScope.launch {
+//            try {
+//                val response = apiService.recipeAll()
+//                _recipesData.value = response
+//            } catch (e: Exception) {
+//                Log.e("RecipesViewModel", "Exception: ${e.message}")
+//                _recipesData.value = null
+//            } finally {
+//                _loading.value = false
+//            }
+//        }
+//    }
+
     fun fetchRecipes() {
         val apiService = ApiConfig.getApiService()
         _loading.value = true
 
         viewModelScope.launch {
-            try {
-                val response = apiService.recipeAll()
-                _recipesData.value = response
-            } catch (e: Exception) {
-                Log.e("RecipesViewModel", "Exception: ${e.message}")
-                _recipesData.value = null
-            } finally {
-                _loading.value = false
+            var retries = 0
+            val maxRetries = 2
+            var success = false
+
+            while (retries <= maxRetries && !success) {
+                try {
+                    val response = apiService.recipeAll()
+                    _recipesData.value = response
+                    success = true
+                } catch (e: Exception) {
+                    Log.e("RecipesViewModel", "Attempt $retries failed: ${e.message}")
+                    if (retries == maxRetries) {
+                        _recipesData.value = null
+                    } else {
+                        delay(2000)
+                    }
+                    retries++
+                }
             }
+            _loading.value = false
         }
     }
 

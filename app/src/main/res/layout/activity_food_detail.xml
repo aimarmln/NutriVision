@@ -49,7 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:fontFamily="@font/hanken_grotesk_bold"
-        android:text="@string/food_details_food_name"
         android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +97,6 @@
                     android:id="@+id/foodCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/food_details_calories"
                     android:textColor="#FF7A00"
                     android:textSize="32sp"
                     android:fontFamily="@font/hanken_grotesk_bold"
@@ -124,7 +122,6 @@
                     android:id="@+id/foodCarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/food_details_carbs"
                     android:textSize="20sp"
                     android:fontFamily="@font/hanken_grotesk"
                     android:textStyle="bold" />
@@ -149,7 +146,6 @@
                     android:id="@+id/foodProtein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/food_details_protein"
                     android:textSize="20sp"
                     android:fontFamily="@font/hanken_grotesk"
                     android:textStyle="bold" />
@@ -174,7 +170,6 @@
                     android:id="@+id/foodFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/food_details_fat"
                     android:textSize="20sp"
                     android:fontFamily="@font/hanken_grotesk"
                     android:textStyle="bold" />

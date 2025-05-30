@@ -47,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:fontFamily="@font/hanken_grotesk_bold"
-        android:text="@string/meal_details_meal_name"
         android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +96,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/hanken_grotesk_bold"
-                    android:text="@string/meal_details_calories"
                     android:textColor="#FF7A00"
                     android:textSize="32sp"
                     android:textStyle="bold" />
@@ -123,7 +121,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/hanken_grotesk"
-                    android:text="@string/meal_details_carbs"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -148,7 +145,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/hanken_grotesk"
-                    android:text="@string/meal_details_protein"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -173,7 +169,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/hanken_grotesk"
-                    android:text="@string/meal_details_fat"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>

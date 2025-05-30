@@ -10,6 +10,7 @@ import com.example.nutrivision.data.remote.api.ApiConfig
 import com.example.nutrivision.data.remote.response.RecipesResponseItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.pow
 
 
 class RecipesViewModel : ViewModel() {
@@ -37,6 +38,34 @@ class RecipesViewModel : ViewModel() {
 //        }
 //    }
 
+//    fun fetchRecipes() {
+//        val apiService = ApiConfig.getApiService()
+//        _loading.value = true
+//
+//        viewModelScope.launch {
+//            var retries = 0
+//            val maxRetries = 2
+//            var success = false
+//
+//            while (retries <= maxRetries && !success) {
+//                try {
+//                    val response = apiService.recipeAll()
+//                    _recipesData.value = response
+//                    success = true
+//                } catch (e: Exception) {
+//                    Log.e("RecipesViewModel", "Attempt $retries failed: ${e.message}")
+//                    if (retries == maxRetries) {
+//                        _recipesData.value = null
+//                    } else {
+//                        delay(2000)
+//                    }
+//                    retries++
+//                }
+//            }
+//            _loading.value = false
+//        }
+//    }
+
     fun fetchRecipes() {
         val apiService = ApiConfig.getApiService()
         _loading.value = true
@@ -52,15 +81,28 @@ class RecipesViewModel : ViewModel() {
                     _recipesData.value = response
                     success = true
                 } catch (e: Exception) {
-                    Log.e("RecipesViewModel", "Attempt $retries failed: ${e.message}")
+                    when (e) {
+                        is java.net.UnknownHostException -> {
+                            Log.e("RecipesViewModel", "Attempt $retries failed: Unable to resolve host (possibly due to cold start or no internet connection)")
+                        }
+                        else -> {
+                            Log.e("RecipesViewModel", "Attempt $retries failed: ${e.message}")
+                        }
+                    }
+
                     if (retries == maxRetries) {
+                        Log.e("RecipesViewModel", "Max retries reached. Failing with null data.")
                         _recipesData.value = null
                     } else {
-                        delay(2000)
+                        val backoffDelay = 2000L * (2.0.pow(retries)).toLong() // 2s, 4s, 8s
+                        Log.w("RecipesViewModel", "Retrying in ${backoffDelay / 1000} seconds...")
+                        delay(backoffDelay)
                     }
+
                     retries++
                 }
             }
+
             _loading.value = false
         }
     }

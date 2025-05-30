@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:paddingBottom="32dp">
+    android:fillViewport="true">
 
     <ImageView
         android:id="@+id/backButton"
@@ -115,14 +114,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanContainer"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/scanContainer" />
 
     <TextView
         android:id="@+id/noFoods"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:paddingBottom="32dp"
         android:fontFamily="@font/hanken_grotesk"
         android:text="@string/scan_results_no_results"
         android:visibility="gone"

@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View.VISIBLE
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.viewModels
@@ -57,29 +58,42 @@ class SplashScreenActivity : AppCompatActivity() {
         recipesViewModel.recipesData.observe(this) { listRecipes ->
             if (listRecipes != null) {
                 lifecycleScope.launch {
-                    animateProgress(70, 100, 800) {
-                        lifecycleScope.launch {
-                            val isLoggedIn = pref.isLoggedIn.first()
-                            if (isLoggedIn) {
+                    val isLoggedIn = pref.isLoggedIn.first()
+                    if (isLoggedIn) {
+                        animateProgress(70, 88, 800) {
+                            lifecycleScope.launch {
                                 val accessToken = pref.accessToken.first() ?: "Unknown access token"
                                 val refreshToken = pref.refreshToken.first() ?: "Unknown refresh token"
                                 homeViewModel.home(accessToken, refreshToken)
-                            } else {
-                                val intent = Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
-                                startActivity(intent)
-                                finish()
                             }
+                        }
+                    } else {
+                        animateProgress(70, 100, 800) {
+                            val intent = Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 }
+            } else {
+                throw IllegalStateException("Server is off. Cannot proceed.")
             }
         }
 
         homeViewModel.homeData.observe(this) { response ->
+            Log.d("SplashScreenActivity", "User isLoggedIn response: $response")
             if (response != null) {
-                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                animateProgress(88, 100, 600) {
+                    val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                animateProgress(88, 100, 600) {
+                    val intent = Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }

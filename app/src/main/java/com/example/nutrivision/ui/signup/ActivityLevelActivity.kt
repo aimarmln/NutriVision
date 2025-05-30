@@ -14,6 +14,7 @@ import com.google.android.material.chip.Chip
 class ActivityLevelActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityActivityLevelBinding
+    private var lastCheckedChipId: Int = View.NO_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,7 @@ class ActivityLevelActivity : AppCompatActivity() {
             intent.getParcelableExtra<SignupUser>(SignupActivity.EXTRA_SIGNUP_USER)
         }
 
+       setupChipGroup()
 
         binding.btnContinueActivityLevel.setOnClickListener {
             val selectedChipId = binding.chipGroupActivityLevel.checkedChipId
@@ -52,6 +54,30 @@ class ActivityLevelActivity : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun setupChipGroup() {
+        val chipGroup = binding.chipGroupActivityLevel
+
+        if (chipGroup.childCount > 0) {
+            val firstChip = chipGroup.getChildAt(0) as? Chip
+            firstChip?.isChecked = true
+            lastCheckedChipId = firstChip?.id ?: View.NO_ID
+        }
+
+        for (i in 0 until chipGroup.childCount) {
+            val chip = chipGroup.getChildAt(i) as? Chip ?: continue
+
+            chip.setOnClickListener {
+                if (chip.isChecked) {
+                    lastCheckedChipId = chip.id
+                } else {
+                    if (chipGroup.checkedChipIds.size == 0 || chip.id == lastCheckedChipId) {
+                        chip.isChecked = true
+                    }
+                }
+            }
         }
     }
 }

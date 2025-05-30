@@ -88,6 +88,8 @@ class ScanResultsActivity : AppCompatActivity() {
             }
         }
 
+        clearImageCache()
+
         if (!scanResults.isNullOrEmpty()) {
             binding.noResults.visibility = GONE
             val sortedList = scanResults.sortedBy { it.id }
@@ -140,6 +142,18 @@ class ScanResultsActivity : AppCompatActivity() {
                         showToast(this@ScanResultsActivity, message ?: "Failed to log food")
                     }
                 }
+            }
+        }
+    }
+
+    private fun clearImageCache() {
+        val cacheDir = cacheDir
+        val imageExtensions = listOf("jpg", "jpeg", "png")
+
+        cacheDir.listFiles()?.forEach { file ->
+            if (file.isFile && imageExtensions.any { file.name.endsWith(it, ignoreCase = true) }) {
+                val deleted = file.delete()
+                Log.d("ScanResultsActivity", "Deleted cache image: ${file.name}, success: $deleted")
             }
         }
     }

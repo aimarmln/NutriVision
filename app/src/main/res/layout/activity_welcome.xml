@@ -57,8 +57,6 @@
         android:id="@+id/btnSignupWelcome"
         android:layout_width="345dp"
         android:layout_height="58dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_gradient"
         android:fontFamily="@font/hanken_grotesk_bold"
@@ -68,7 +66,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnLoginWelcome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton

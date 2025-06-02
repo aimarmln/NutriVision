@@ -18,6 +18,8 @@ class BirthdayActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        binding.datePicker.updateDate(2005, 0, 1)
+
         val signupUser = if (Build.VERSION.SDK_INT >= 33) {
             intent.getParcelableExtra<SignupUser>(SignupActivity.EXTRA_SIGNUP_USER, SignupUser::class.java)
         } else {

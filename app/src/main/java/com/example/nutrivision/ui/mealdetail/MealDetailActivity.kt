@@ -148,9 +148,19 @@ class MealDetailActivity: AppCompatActivity() {
 
                 if (weightText.isNotEmpty()) {
                     val weight = weightText.toIntOrNull()
-                    if (weight != null && weight > 0) {
-                        lifecycleScope.launch {
-                            mealDetailViewModel.calculateNutrition(foodId, weight)
+
+                    if (weight != null) {
+                        if (weight > 1000) {
+                            binding.edtWeight.setText("1000")
+                            binding.edtWeight.setSelection(binding.edtWeight.text.length)
+                            binding.edtWeight.error = "Max allowed weight is 1000g"
+                            return
+                        }
+
+                        if (weight > 0) {
+                            lifecycleScope.launch {
+                                mealDetailViewModel.calculateNutrition(foodId, weight)
+                            }
                         }
                     }
                 }

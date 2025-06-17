@@ -20,7 +20,7 @@ class FoodsAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(foodId: Int, mealType: String?)
+        fun onItemClick(foodId: Int, mealType: String?, weightGrams: Int?)
     }
 
     override fun onCreateViewHolder(
@@ -52,7 +52,8 @@ class FoodsAdapter(
 
             binding.root.setOnClickListener {
                 food.id?.let { id ->
-                    onItemClickListener.onItemClick(id, mealType)
+                    val weightGrams = food.weight ?: 100
+                    onItemClickListener.onItemClick(id, mealType, weightGrams)
                 }
             }
 

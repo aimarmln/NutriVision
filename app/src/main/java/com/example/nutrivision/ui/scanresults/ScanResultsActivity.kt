@@ -63,8 +63,8 @@ class ScanResultsActivity : AppCompatActivity() {
         foodsAdapter = FoodsAdapter(
             mealType = mealType,
             onItemClickListener = object : FoodsAdapter.OnItemClickListener {
-                override fun onItemClick(foodId: Int, mealType: String?) {
-                    navigateToFoodDetail(foodId, mealType)
+                override fun onItemClick(foodId: Int, mealType: String?, weightGrams: Int?) {
+                    navigateToFoodDetail(foodId, mealType, weightGrams)
                 }
             },
             onLogClickListener = object : FoodsAdapter.OnLogClickListener {
@@ -94,6 +94,7 @@ class ScanResultsActivity : AppCompatActivity() {
             binding.noResults.visibility = GONE
             val sortedList = scanResults.sortedBy { it.id }
             foodsAdapter.submitList(sortedList)
+            showToast(this@ScanResultsActivity, "Log only the foods you ate")
         } else {
             binding.noResults.visibility = VISIBLE
             foodsAdapter.submitList(emptyList())
@@ -110,10 +111,11 @@ class ScanResultsActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToFoodDetail(foodId: Int, mealType: String?) {
+    private fun navigateToFoodDetail(foodId: Int, mealType: String?, weightGrams: Int?) {
         val intent = Intent(this, FoodDetailActivity::class.java)
         intent.putExtra(FoodDetailActivity.EXTRA_ID, foodId)
         intent.putExtra(FoodDetailActivity.EXTRA_MEAL_TYPE, mealType)
+        intent.putExtra(FoodDetailActivity.EXTRA_WEIGHT, weightGrams)
         startActivity(intent)
     }
 

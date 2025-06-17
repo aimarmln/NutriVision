@@ -51,8 +51,8 @@ class MealActivity : AppCompatActivity() {
         foodsAdapter = FoodsAdapter(
             mealType = mealType,
             onItemClickListener = object : FoodsAdapter.OnItemClickListener {
-                override fun onItemClick(foodId: Int, mealType: String?) {
-                    navigateToFoodDetail(foodId, mealType)
+                override fun onItemClick(foodId: Int, mealType: String?, weightGrams: Int?) {
+                    navigateToFoodDetail(foodId, mealType, weightGrams)
                 }
             },
             onLogClickListener = object : FoodsAdapter.OnLogClickListener {
@@ -126,10 +126,11 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToFoodDetail(foodId: Int, mealType: String?) {
+    private fun navigateToFoodDetail(foodId: Int, mealType: String?, weightGrams: Int?) {
         val intent = Intent(this, FoodDetailActivity::class.java)
         intent.putExtra(FoodDetailActivity.EXTRA_ID, foodId)
         intent.putExtra(FoodDetailActivity.EXTRA_MEAL_TYPE, mealType)
+        intent.putExtra(FoodDetailActivity.EXTRA_WEIGHT, weightGrams)
         startActivity(intent)
     }
 

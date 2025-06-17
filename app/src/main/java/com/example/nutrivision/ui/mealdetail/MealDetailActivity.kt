@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -46,6 +49,10 @@ class MealDetailActivity: AppCompatActivity() {
             val accessToken = pref.accessToken.first() ?: "Unknown access token"
             val refreshToken = pref.refreshToken.first() ?: "Unknown refresh token"
             mealDetailViewModel.fetchMealDetail(accessToken, refreshToken, mealId)
+        }
+
+        mealDetailViewModel.loading.observe(this) { isLoading ->
+            if (isLoading) setDisplay(false) else setDisplay(true)
         }
 
         mealDetailViewModel.mealDetailData.observe(this) { mealDetail ->
@@ -174,4 +181,16 @@ class MealDetailActivity: AppCompatActivity() {
         }
     }
 
+    private fun setDisplay(isVisible: Boolean) {
+        val viewVisibility: Int = if (isVisible) View.VISIBLE else View.GONE
+        val progressBarVisibility: Int = if (isVisible) View.GONE else View.VISIBLE
+
+        binding.tvFoodName.visibility = viewVisibility
+        binding.materialCardView.visibility = viewVisibility
+        binding.imageView10.visibility = viewVisibility
+        binding.edtWeight.visibility = viewVisibility
+        binding.edtGrams.visibility = viewVisibility
+        binding.btnUpdate.visibility = viewVisibility
+        binding.progressBar.visibility = progressBarVisibility
+    }
 }

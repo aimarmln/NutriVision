@@ -2,6 +2,7 @@ package com.example.nutrivision.ui.home
 
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -86,6 +87,11 @@ class HomeFragment : Fragment() {
                 binding.tvCaloriesEaten.text = response.user?.caloriesEaten.toString()
 
                 val caloriesRemaining = response.user?.caloriesLeft ?: 0
+                val caloriesMax = response.user?.caloriesPerDay ?: 0
+                val caloriesEaten = response.user?.caloriesEaten ?: 0
+
+                binding.caloriesProgressBar.max = caloriesMax
+
                 if (caloriesRemaining < 0) {
                     val caloriesSurplus = abs(caloriesRemaining)
                     binding.caloriesRemaining.text = caloriesSurplus.toString()
@@ -93,25 +99,22 @@ class HomeFragment : Fragment() {
 
                     val redColor = ContextCompat.getColor(requireContext(), R.color.dark_magenta)
                     binding.caloriesRemaining.setTextColor(redColor)
-                    binding.caloriesProgressBar.progressDrawable.setTint(redColor)
+
+                    setProgressBar(true)
                 } else {
                     binding.caloriesRemaining.text = caloriesRemaining.toString()
                     binding.caloriesRemainingText.text = "Kcal left"
 
-                    val normalDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_progress_bar)
-                    binding.caloriesProgressBar.progressDrawable = normalDrawable
+                    val whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
+                    binding.caloriesRemaining.setTextColor(whiteColor)
 
-                    val defaultColor = ContextCompat.getColor(requireContext(), R.color.white)
-                    binding.caloriesRemaining.setTextColor(defaultColor)
+                    setProgressBar(false)
                 }
 
-                val caloriesMax = response.user?.caloriesPerDay ?: 0
-                val caloriesEaten = response.user?.caloriesEaten ?: 0
-                binding.caloriesProgressBar.max = caloriesMax
                 if (!hasAnimatedOnce) {
-                    animateProgressBar(binding.caloriesProgressBar, response.user?.caloriesEaten ?: 0)
+                    animateProgressBar(binding.caloriesProgressBar, caloriesEaten)
                 } else {
-                    binding.caloriesProgressBar.progress = response.user?.caloriesEaten ?: 0
+                    binding.caloriesProgressBar.progress = caloriesEaten
                 }
 
                 val carbsEaten = response.user?.carbohydratesEaten?.roundToInt()
@@ -274,6 +277,16 @@ class HomeFragment : Fragment() {
             this.duration = duration
             interpolator = DecelerateInterpolator()
             start()
+        }
+    }
+
+    private fun setProgressBar(isFull: Boolean) {
+        val layerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_progress_bar)?.mutate()
+        if (layerDrawable is LayerDrawable) {
+            val progressDrawable = layerDrawable.findDrawableByLayerId(android.R.id.progress)
+            val color = ContextCompat.getColor(requireContext(), if (isFull) R.color.dark_magenta else R.color.purple_gradient_start)
+            progressDrawable?.mutate()?.setTint(color)
+            binding.caloriesProgressBar.progressDrawable = layerDrawable
         }
     }
 

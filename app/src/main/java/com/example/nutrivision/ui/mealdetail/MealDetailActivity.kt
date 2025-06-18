@@ -33,12 +33,16 @@ class MealDetailActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMealDetailBinding
 
+    private var isMealDetailLoaded = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
 
         binding = ActivityMealDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
+
+        setDisplay(false)
 
         val mealId = intent.getIntExtra(EXTRA_MEAL_ID, 0)
         val foodId = intent.getIntExtra(EXTRA_FOOD_ID, 0)
@@ -51,18 +55,16 @@ class MealDetailActivity: AppCompatActivity() {
             mealDetailViewModel.fetchMealDetail(accessToken, refreshToken, mealId)
         }
 
-        mealDetailViewModel.loading.observe(this) { isLoading ->
-            if (isLoading) setDisplay(false) else setDisplay(true)
-        }
-
         mealDetailViewModel.mealDetailData.observe(this) { mealDetail ->
             if (mealDetail != null) {
+                isMealDetailLoaded = true
                 binding.tvFoodName.text = mealDetail.foodName
                 binding.tvCalories.text = mealDetail.calories.toString()
                 binding.tvCarbs.text = mealDetail.carbohydrates.toString()
                 binding.tvProtein.text = mealDetail.proteins.toString()
                 binding.tvFat.text = mealDetail.fats.toString()
                 binding.edtWeight.setText(mealDetail.weightGrams?.toString() ?: "")
+                checkIfReadyToDisplay()
             } else {
                 Log.d("MealDetailActivity", "Data is empty for meal detail")
             }
@@ -192,5 +194,11 @@ class MealDetailActivity: AppCompatActivity() {
         binding.edtGrams.visibility = viewVisibility
         binding.btnUpdate.visibility = viewVisibility
         binding.progressBar.visibility = progressBarVisibility
+    }
+
+    private fun checkIfReadyToDisplay() {
+        if (isMealDetailLoaded) {
+            setDisplay(true)
+        }
     }
 }

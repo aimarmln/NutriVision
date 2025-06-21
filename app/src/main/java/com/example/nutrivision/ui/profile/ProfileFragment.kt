@@ -12,8 +12,11 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -49,10 +52,15 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_gradient_start)
-        val window = requireActivity().window
-        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-        insetsController.isAppearanceLightStatusBars = false
+        val navView = requireActivity().findViewById<View>(R.id.nav_view)
+        navView?.post {
+            binding.scrollView.setPadding(
+                binding.scrollView.paddingLeft,
+                binding.scrollView.paddingTop,
+                binding.scrollView.paddingRight,
+                navView.height
+            )
+        }
 
         val pref = SettingPreferences.getInstance(requireContext().dataStore)
 
@@ -172,7 +180,7 @@ class ProfileFragment : Fragment() {
             if (weightStr.isEmpty()) {
                 binding.edtWeight.error = "Weight cannot be empty"
                 isValid = false
-            } else if (weight == null || weight <= 40) {
+            } else if (weight == null || weight < 40) {
                 binding.edtWeight.error = "Weight must be greater than 40 kg"
                 isValid = false
             }

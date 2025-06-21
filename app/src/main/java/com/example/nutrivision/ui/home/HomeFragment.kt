@@ -44,6 +44,7 @@ class HomeFragment : Fragment() {
     private lateinit var snacksItemMealAdapter: ItemMealAdapter
 
     private var hasAnimatedOnce = false
+    private var hasRefreshedHomeOnce = false
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -56,13 +57,6 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val pref = SettingPreferences.getInstance(requireContext().dataStore)
-        lifecycleScope.launch {
-            val accessToken = pref.accessToken.first() ?: "Unknown access token"
-            val refreshToken = pref.refreshToken.first() ?: "Unknown refresh token"
-            homeViewModel.home(accessToken, refreshToken)
-        }
 
         breakfastItemMealAdapter = ItemMealAdapter()
         binding.rvBreakfast.layoutManager = LinearLayoutManager(requireContext())
@@ -146,7 +140,11 @@ class HomeFragment : Fragment() {
                 binding.tvFat.text = fatText
                 binding.fatProgressBar.max = fatsPerDay ?: 0
                 if (!hasAnimatedOnce) {
-                    animateProgressBar(binding.fatProgressBar, fatsEaten ?: 0)
+                    if (fatsEaten != null && fatsPerDay != null && fatsEaten >= fatsPerDay) {
+                        animateProgressBar(binding.fatProgressBar, fatsPerDay ?: 0)
+                    } else {
+                        animateProgressBar(binding.fatProgressBar, fatsEaten ?: 0)
+                    }
                 } else {
                     binding.fatProgressBar.progress = fatsEaten ?: 0
                 }
@@ -243,7 +241,6 @@ class HomeFragment : Fragment() {
                 } else {
                     snacksItemMealAdapter.submitList(emptyList())
                 }
-
             }
         }
 
@@ -261,6 +258,16 @@ class HomeFragment : Fragment() {
 
         binding.btnLogSnacks.setOnClickListener {
             navigateToMealActivity("Snacks")
+        }
+
+        val navView = requireActivity().findViewById<View>(R.id.nav_view)
+        navView?.post {
+            binding.scrollView.setPadding(
+                binding.scrollView.paddingLeft,
+                binding.scrollView.paddingTop,
+                binding.scrollView.paddingRight,
+                navView.height
+            )
         }
 
         return root
@@ -292,8 +299,24 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        if (!hasRefreshedHomeOnce) {
+            hasRefreshedHomeOnce = true
+
+            view?.post {
+                parentFragmentManager.beginTransaction()
+                    .detach(this)
+                    .commitNowAllowingStateLoss()
+
+                parentFragmentManager.beginTransaction()
+                    .attach(this)
+                    .commitNowAllowingStateLoss()
+            }
+            return
+        }
+
+        val pref = SettingPreferences.getInstance(requireContext().dataStore)
         lifecycleScope.launch {
-            val pref = SettingPreferences.getInstance(requireContext().dataStore)
             val accessToken = pref.accessToken.first() ?: "Unknown access token"
             val refreshToken = pref.refreshToken.first() ?: "Unknown refresh token"
             homeViewModel.home(accessToken, refreshToken)

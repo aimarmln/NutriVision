@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nutrivision.R
 import com.example.nutrivision.databinding.FragmentRecipesBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -42,6 +43,16 @@ class RecipesFragment : Fragment() {
     ): View {
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val navView = requireActivity().findViewById<View>(R.id.nav_view)
+        navView?.post {
+            binding.scrollView.setPadding(
+                binding.scrollView.paddingLeft,
+                binding.scrollView.paddingTop,
+                binding.scrollView.paddingRight,
+                navView.height
+            )
+        }
 
         recipesAdapter = RecipesAdapter()
         binding.rvRecipes.layoutManager = LinearLayoutManager(requireActivity())

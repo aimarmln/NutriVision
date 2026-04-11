@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmerRecipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Image skeleton -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/shimmerImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#D6D6D6"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintDimensionRatio="1:1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_shimmer_placeholder"/>
+
+            <!-- spacing -->
+            <Space
+                android:layout_width="80dp"
+                android:layout_height="1dp"/>
+
+            <!-- Kanan (kecil) -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_shimmer_placeholder"/>
+
+        </LinearLayout>
+
+        <!-- Description -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <!-- Ingredients -->
+        <View
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <!-- list -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:background="@drawable/bg_shimmer_placeholder"
+                app:layout_constraintWidth_percent="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <!-- Steps -->
+        <View
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <!-- list -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <!-- Steps -->
+        <View
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <!-- list -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:background="@drawable/bg_shimmer_placeholder"/>
+    </LinearLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

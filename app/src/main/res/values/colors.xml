@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple_tint">#5263F8</color>
     <color name="grey">#686868</color>
+    <color name="light_grey">#AAAAAA</color>
 
     <color name="dark_magenta">#DC175A</color>
     <color name="red">#FF3B30</color>
@@ -35,4 +36,7 @@
     <color name="healthy">#4CAF50</color>
 
     <color name="purple_gradient_start">#5263F8</color>
+
+    <color name="button_disabled">#EEEEEE</color>
+    <color name="transparent">#00000000</color>
 </resources>

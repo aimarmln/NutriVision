@@ -1,121 +1,185 @@
 package com.example.nutrivision.ui.recipedetail
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.nutrivision.data.local.SettingPreferences
-import com.example.nutrivision.data.local.dataStore
-import com.example.nutrivision.data.remote.api.ApiConfig
-import com.example.nutrivision.data.remote.request.CommentRequest
-import com.example.nutrivision.data.remote.response.RecipeDetailResponse
-import kotlinx.coroutines.flow.first
+import com.example.nutrivision.data.remote.request.recipe.PostRecipeCommentRequest
+import com.example.nutrivision.data.remote.response.Cursor
+import com.example.nutrivision.data.remote.response.recipe.CommentItem
+import com.example.nutrivision.data.repository.CommentRepository
+import com.example.nutrivision.data.repository.RecipeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeDetailViewModel(private val application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class RecipeDetailViewModel @Inject constructor(
+    private val recipeRepository: RecipeRepository,
+    private val commentRepository: CommentRepository
+) : ViewModel() {
 
-    private val pref = SettingPreferences.getInstance(application.dataStore)
+    // Recipe detail UI state
+    private val _recipeUiState = MutableLiveData<RecipeDetailUiState>(RecipeDetailUiState.Idle)
+    val recipeUiState: LiveData<RecipeDetailUiState> = _recipeUiState
 
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> =  _loading
+    private val _postCommentState = MutableLiveData<PostCommentState>()
+    val postCommentState: LiveData<PostCommentState> = _postCommentState
 
-    private val _recipeDetailData = MutableLiveData<RecipeDetailResponse?>()
-    val recipeDetailData: LiveData<RecipeDetailResponse?> get() = _recipeDetailData
+    private val _commentInput = MutableLiveData("")
+    val commentInput: LiveData<String> = _commentInput
 
-    fun fetchRecipeDetail(recipeId: Int) {
-        val apiService = ApiConfig.getApiService()
-        _loading.value = true
+    // Comments list & pagination
+    private val _comments = MutableLiveData<List<CommentListItem>>(emptyList())
+    val comments: LiveData<List<CommentListItem>> = _comments
+
+    private var lastCursor: Cursor? = null
+    private var isLastPage = false
+    private var isLoading = false
+    private val accumulatedComments = mutableListOf<CommentListItem>()
+
+    // Fetch recipe detail
+    fun fetchRecipeDetail(recipeId: String) {
+        _recipeUiState.value = RecipeDetailUiState.Loading
 
         viewModelScope.launch {
-            try {
-                val response = apiService.recipeDetail(recipeId)
-                _recipeDetailData.value = response
-            } catch (e: Exception) {
-                Log.e("RecipeDetailViewModel", "Exception: ${e.message}")
-                _recipeDetailData.value = null
-            } finally {
-                _loading.value = false
-            }
+            recipeRepository.getRecipeDetail(recipeId)
+                .onSuccess {
+                    val data = it.data ?: return@onSuccess
+                    _recipeUiState.value = RecipeDetailUiState.Success(data)
+                }
+                .onFailure {
+                    _recipeUiState.value =
+                        RecipeDetailUiState.Error(it.message ?: "Failed to load recipe")
+                }
         }
     }
-    
-    fun comment(
-        accessToken: String,
-        refreshToken: String,
-        commentRequest: CommentRequest,
-        onResult: (Boolean, String?) -> Unit
-    ) {
-        val apiService = ApiConfig.getApiService()
-        _loading.value
+
+    // Fetch comments (paginated)
+    fun fetchComments(recipeId: String, loadMore: Boolean = false) {
+        if (loadMore && (isLoading || isLastPage)) return
+
+        if (!loadMore) {
+            lastCursor = null
+            isLastPage = false
+            accumulatedComments.clear()
+        } else {
+            accumulatedComments.add(CommentListItem.Loading)
+            _comments.value = accumulatedComments.toList()
+        }
+
+        isLoading = true
 
         viewModelScope.launch {
-            try {
-                val response = apiService.postComment("Bearer $accessToken", commentRequest)
-                if (response.isSuccessful) {
-                    onResult(true, response.body()?.msg)
-                } else if (response.code() == 401) {
-                    refreshToken(refreshToken) { success ->
-                        if (success) {
-                            viewModelScope.launch {
-                                val newAccessToken = pref.accessToken.first()
-                                try {
-                                    val retryResponse = apiService.postComment("Bearer $newAccessToken", commentRequest)
-                                    if (retryResponse.isSuccessful) {
-                                        onResult(true, retryResponse.body()?.msg)
-                                    } else {
-                                        onResult(false, "Update failed after token refresh")
-                                    }
-                                } catch (retryError: Exception) {
-                                    Log.e("RecipeDetailViewModel", "Retry failed: ${retryError.message}")
-                                } finally {
-                                    _loading.value = false
-                                }
-                            }
-                        } else {
-                            onResult(false, "Token refresh failed")
-                        }
+            recipeRepository.getRecipeComments(recipeId, lastCursor?.createdAt, limit = 10)
+                .onSuccess { response ->
+                    if (loadMore) removeLoadingFooter()
+
+                    response.data?.map { CommentListItem.Item(it) }?.let {
+                        accumulatedComments.addAll(it)
+                    }
+
+                    lastCursor = response.pagination?.nextCursor
+                    if (response.pagination?.hasMore == false) isLastPage = true
+
+                    _comments.value = accumulatedComments.toList()
+                    isLoading = false
+                }
+                .onFailure {
+                    if (loadMore) removeLoadingFooter()
+                    isLoading = false
+                }
+        }
+    }
+
+    private fun removeLoadingFooter() {
+        if (accumulatedComments.isNotEmpty() &&
+            accumulatedComments.last() is CommentListItem.Loading
+        ) accumulatedComments.removeAt(accumulatedComments.lastIndex)
+    }
+
+    fun postComment(recipeId: String, body: PostRecipeCommentRequest) {
+        _postCommentState.value = PostCommentState.Loading
+
+        viewModelScope.launch {
+            recipeRepository.postRecipeComment(recipeId, body)
+                .onSuccess {
+                    val data = it.data ?: return@onSuccess
+
+                    val commentItem = CommentItem(
+                        id = data.id,
+                        name = data.userName,
+                        text = data.comment,
+                        sentiment = data.sentiment,
+                        createdAt = data.createdAt,
+                        isOwnComment = true
+                    )
+
+                    accumulatedComments.add(0, CommentListItem.Item(commentItem))
+                    _comments.value = accumulatedComments.toList()
+
+                    _postCommentState.value = PostCommentState.Success
+
+                    val currentState = _recipeUiState.value
+                    if (currentState is RecipeDetailUiState.Success) {
+                        val currentRecipe = currentState.data
+
+                        val updatedLikes =
+                            if (data.sentiment == "Positive")
+                                currentRecipe.positiveCommentCount + 1
+                            else
+                                currentRecipe.positiveCommentCount
+
+                        val updatedRecipe = currentRecipe.copy(
+                            positiveCommentCount = updatedLikes
+                        )
+
+                        _commentInput.value = ""
+                        _recipeUiState.value = RecipeDetailUiState.Success(updatedRecipe)
                     }
                 }
-            } catch (e: Exception) {
-                Log.e("RecipeDetailViewModel", "Exception: ${e.message}")
-                onResult(false, e.message)
-            } finally {
-                _loading.value = false
-            }
+                .onFailure {
+                    _postCommentState.value =
+                        PostCommentState.Error(it.message ?: "Failed to post comment")
+                }
         }
     }
 
-    private fun refreshToken(refreshToken: String, onResult: (Boolean) -> Unit) {
-        val apiService = ApiConfig.getApiService()
+    fun deleteComment(commentId: String) {
+        val updated = accumulatedComments.map {
+            if (it is CommentListItem.Item && it.data.id == commentId) {
+                it.copy(isDeleting = true)
+            } else it
+        }
+
+        accumulatedComments.clear()
+        accumulatedComments.addAll(updated)
+        _comments.value = accumulatedComments.toList()
+
         viewModelScope.launch {
-            try {
-                val response = apiService.refresh("Bearer $refreshToken")
+            commentRepository.deleteComment(commentId)
+                .onSuccess {
+                    accumulatedComments.removeAll {
+                        it is CommentListItem.Item && it.data.id == commentId
+                    }
 
-                pref.saveTokens(
-                    response.accessToken.orEmpty(),
-                    response.refreshToken.orEmpty()
-                )
+                    _comments.value = accumulatedComments.toList()
+                }
+                .onFailure {
+                    val rollback = accumulatedComments.map {
+                        if (it is CommentListItem.Item && it.data.id == commentId) {
+                            it.copy(isDeleting = false)
+                        } else it
+                    }
 
-                onResult(true)
-            } catch (e: Exception) {
-                Log.e("RecipeDetailViewModel", "Token refresh failed: ${e.message}")
-                onResult(false)
-            }
+                    accumulatedComments.clear()
+                    accumulatedComments.addAll(rollback)
+                    _comments.value = accumulatedComments.toList()
+                }
         }
     }
-}
 
-class RecipeDetailViewModelFactory(private val application: Application) :
-    ViewModelProvider.Factory {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RecipeDetailViewModel::class.java)) {
-            return RecipeDetailViewModel(application) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    fun updateCommentInput(text: String) {
+        _commentInput.value = text
     }
 }

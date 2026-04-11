@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NutriVision" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.NutriVision" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -19,5 +19,17 @@
 
     <style name="Theme.RemoveSplashScreenTheme" parent="Theme.NutriVision">
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="ToolbarTitleText" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hanken_grotesk_bold</item>
+    </style>
+
+    <style name="PopupMenuStyle" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupElevation">2dp</item> <!-- 🔥 ini -->
+        <item name="android:dropDownHorizontalOffset">-8dp</item>
+<!--        <item name="android:dropDownHorizontalOffset">-16dp</item> &lt;!&ndash; geser ke kiri &ndash;&gt;-->
     </style>
 </resources>

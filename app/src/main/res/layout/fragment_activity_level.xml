@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/hanken_grotesk_bold"
+        android:text="@string/activity_level_form_question"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+sa
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupActivityLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestion"
+        app:layout_constraintVertical_bias="0.0"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipSedentary"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:checked="true"
+            android:fontFamily="@font/hanken_grotesk_bold"
+            android:text="@string/activity_level_sedentary"
+            android:textSize="20sp"
+            app:chipStartPadding="60dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipLightlyActive"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:fontFamily="@font/hanken_grotesk_bold"
+            android:text="@string/activity_level_lightly_active"
+            android:textSize="20sp"
+            app:chipStartPadding="60dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipModeratelyActive"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:fontFamily="@font/hanken_grotesk_bold"
+            android:text="@string/activity_level_moderately_active"
+            android:textSize="20sp"
+            app:chipStartPadding="60dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipActive"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:fontFamily="@font/hanken_grotesk_bold"
+            android:text="@string/activity_level_active"
+            android:textSize="20sp"
+            app:chipStartPadding="60dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipVeryActive"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:fontFamily="@font/hanken_grotesk_bold"
+            android:text="@string/activity_level_very_active"
+            android:textSize="20sp"
+            app:chipStartPadding="60dp" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,159 +1,154 @@
 package com.example.nutrivision.ui.recipedetail
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.nutrivision.data.local.SettingPreferences
-import com.example.nutrivision.data.local.dataStore
-import com.example.nutrivision.data.remote.request.CommentRequest
+import androidx.recyclerview.widget.RecyclerView
+import com.example.nutrivision.data.remote.request.recipe.PostRecipeCommentRequest
 import com.example.nutrivision.databinding.ActivityRecipeDetailBinding
 import com.example.nutrivision.utils.showToast
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
-class RecipeDetailActivity: AppCompatActivity() {
+@AndroidEntryPoint
+class RecipeDetailActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_ID = "EXTRA_ID"
+        const val EXTRA_ID = "extra_id"
     }
-
-    private val recipeDetailViewModel: RecipeDetailViewModel by viewModels {
-        RecipeDetailViewModelFactory(application)
-    }
-
-    private lateinit var commentsAdapter: CommentsAdapter
 
     private lateinit var binding: ActivityRecipeDetailBinding
+    private val viewModel: RecipeDetailViewModel by viewModels()
+    private lateinit var adapter: RecipeDetailAdapter
+    private lateinit var recipeId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-
         binding = ActivityRecipeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        commentsAdapter = CommentsAdapter()
-        binding.rvComments.layoutManager = LinearLayoutManager(this)
-        binding.rvComments.adapter = commentsAdapter
-        Log.d("RecipeDetailActivity", "RecyclerView adapter and layout manager has been managed")
+        recipeId = recipeId()
 
-        val recipeId = intent.getIntExtra(EXTRA_ID, 0)
-        lifecycleScope.launch {
-            recipeDetailViewModel.fetchRecipeDetail(recipeId)
-        }
+        setupToolbar()
+        setupRecyclerView()
+        observeViewModel()
+        setupInfiniteScroll()
 
-        recipeDetailViewModel.loading.observe(this) { isLoading ->
-            if (isLoading) {
-                binding.progressBar.visibility = VISIBLE
-            } else {
-                binding.progressBar.visibility = GONE
-                binding.btnComment.visibility = VISIBLE
+        fetchRecipe()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = RecipeDetailAdapter(
+            onPostComment = { comment ->
+                viewModel.postComment(recipeId(), PostRecipeCommentRequest(comment))
+            },
+            onDeleteComment = { commentId ->
+                viewModel.deleteComment(commentId)
+            },
+            onTextChanged = {
+                viewModel.updateCommentInput(it)
             }
-        }
+        )
 
-        recipeDetailViewModel.recipeDetailData.observe(this) { recipeDetail ->
-            if (recipeDetail != null) {
-                Log.d("RecipeDetailActivity", "Data for RecyclerView: $recipeDetail")
-
-                val context = binding.root.context
-                val imageResId = context.resources.getIdentifier(
-                    "recipe_${recipeDetail.id}",
-                    "drawable",
-                    context.packageName
-                )
-                binding.recipeImage.setImageResource(imageResId)
-
-                binding.recipeName.text = recipeDetail.recipeName ?: "Unknown recipe name"
-                binding.recipeLikes.text = "🤍 ${recipeDetail.likes}" ?: "Unknown recipe likes"
-                binding.recipeDescription.text = recipeDetail.description ?: "Unknown description"
-                binding.recipeServing.text = "${recipeDetail.servingYield} Servings" ?: "Unknown serving"
-
-                if (recipeDetail.healthCategory == "Unhealthy") {
-                    binding.recipeHealthCategory.visibility = GONE
-                }
-
-                binding.recipeIngredients.text = arrayToString(recipeDetail.ingredients)
-                binding.recipeInstructions.text = arrayToString(recipeDetail.instructions)
-
-                if (!recipeDetail.comments.isNullOrEmpty()) {
-                    val sortedComments = recipeDetail.comments.sortedBy { it?.id }
-                    commentsAdapter.submitList(sortedComments)
-                    binding.noComments.visibility = GONE
-                } else {
-                    binding.noComments.visibility = VISIBLE
-                    commentsAdapter.submitList(emptyList())
-                }
-            } else {
-                Log.d("RecipeDetailActivity", "Data is empty for RecyclerView")
-                commentsAdapter.submitList(emptyList())
-            }
-        }
-
-        val pref = SettingPreferences.getInstance(application.dataStore)
-
-        binding.btnComment.setOnClickListener {
-            val text = binding.edtComment.text.toString().trim()
-
-            binding.edtComment.error = null
-
-            if (text.isEmpty()) {
-                binding.edtComment.error = "Comment cannot be empty"
-                return@setOnClickListener
-            }
-
-            if (text.all { it.isDigit() }) {
-                binding.edtComment.error = "Comment cannot contain only numbers"
-                return@setOnClickListener
-            }
-
-            if (!text.any { it.isLetter() }) {
-                binding.edtComment.error = "Comment must contain at least one letter"
-                return@setOnClickListener
-            }
-
-            val commentRequest = CommentRequest(
-                recipeId = recipeId,
-                text = text
-            )
-
-            binding.btnComment.visibility = GONE
-            binding.progressBar.visibility = VISIBLE
-
-            lifecycleScope.launch {
-                val accessToken = pref.accessToken.first() ?: "Unknown access token"
-                val refreshToken = pref.refreshToken.first() ?: "Unknown refresh token"
-
-                recipeDetailViewModel.comment(
-                    accessToken,
-                    refreshToken,
-                    commentRequest
-                ) { success, message ->
-                    if (success) {
-                        runOnUiThread {
-                            showToast(this@RecipeDetailActivity, message ?: "Comment posted successfully")
-                            recipeDetailViewModel.fetchRecipeDetail(recipeId)
-                        }
-                    } else {
-                        runOnUiThread {
-                            showToast(this@RecipeDetailActivity, message ?: "Comment failed to post")
-                        }
-                    }
-                    binding.edtComment.text = null
-                }
-            }
-        }
-
-        binding.backButton.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+        binding.rvMain.apply {
+            layoutManager = LinearLayoutManager(this@RecipeDetailActivity)
+            adapter = this@RecipeDetailActivity.adapter
         }
     }
 
-    private fun arrayToString(array: List<String?>?): String {
-        return array?.joinToString("\n\n") { "• ${it ?: "Unknown item"}" } ?: "Unknown items"
+    private fun observeViewModel() {
+        viewModel.recipeUiState.observe(this) { recipeState ->
+            mergeAndSubmitList(recipeState, viewModel.comments.value ?: emptyList())
+        }
+
+        viewModel.comments.observe(this) { comments ->
+            mergeAndSubmitList(viewModel.recipeUiState.value ?: RecipeDetailUiState.Idle, comments)
+        }
+
+        viewModel.postCommentState.observe(this) { state ->
+            when (state) {
+                is PostCommentState.Loading -> {
+                    adapter.setPostingState(true)
+                }
+
+                is PostCommentState.Success -> {
+                    showToast(this, "Comment posted")
+                    adapter.setPostingState(false)
+                }
+
+                is PostCommentState.Error -> {
+                    showToast(this, state.message)
+                    adapter.setPostingState(false)
+                }
+
+                else -> Unit
+            }
+        }
+
+        viewModel.commentInput.observe(this) { input ->
+            adapter.setCommentInput(input)
+        }
+    }
+
+    private fun mergeAndSubmitList(
+        recipeState: RecipeDetailUiState,
+        comments: List<CommentListItem>
+    ) {
+        val items = mutableListOf<RecipeDetailListItem>()
+
+        if (recipeState !is RecipeDetailUiState.Success) {
+            items.add(RecipeDetailListItem.ShimmerRecipe)
+            items.add(RecipeDetailListItem.ShimmerCommentForm)
+
+            adapter.submitList(items)
+            return
+        }
+
+        items.add(RecipeDetailListItem.Recipe(recipeState.data))
+        items.add(RecipeDetailListItem.CommentInput)
+
+        val realComments = comments.filterIsInstance<CommentListItem.Item>()
+
+        if (realComments.isEmpty()) {
+            items.add(RecipeDetailListItem.NoComments)
+        } else {
+            realComments.forEach {
+                items.add(RecipeDetailListItem.Comment(it))
+            }
+        }
+
+        if (comments.any { it is CommentListItem.Loading }) {
+            items.add(RecipeDetailListItem.Loading)
+        }
+
+        adapter.submitList(items)
+    }
+
+    private fun fetchRecipe() {
+        viewModel.fetchRecipeDetail(recipeId)
+        viewModel.fetchComments(recipeId)
+    }
+
+    private fun recipeId(): String = requireNotNull(intent.getStringExtra(EXTRA_ID))
+
+    private fun setupInfiniteScroll() {
+        binding.rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = rv.layoutManager as LinearLayoutManager
+                val totalItem = layoutManager.itemCount
+                val lastVisible = layoutManager.findLastVisibleItemPosition()
+
+                if (totalItem <= lastVisible + 3) {
+                    // load more comments
+                    viewModel.fetchComments(recipeId(), loadMore = true)
+                }
+            }
+        })
     }
 }

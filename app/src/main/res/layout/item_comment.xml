@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardViewComments"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/edtComment"
@@ -46,6 +46,28 @@
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/username"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnMore"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_more_vert"
+            android:contentDescription="More"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="12dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressDelete"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="visible"
+            android:indeterminate="true"
+            android:indeterminateTint="#838DE7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="12dp"/>
 
         <TextView
             android:id="@+id/userComments"

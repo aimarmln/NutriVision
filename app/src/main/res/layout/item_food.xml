@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardViewFood"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginBottom="16dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -23,10 +22,10 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/logButton"
+            app:layout_constraintEnd_toStartOf="@+id/logButtonContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -50,16 +49,45 @@
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/logButton"
+        <FrameLayout
+            android:id="@+id/logButtonContainer"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:background="@null"
-            android:contentDescription="@string/add"
-            android:src="@drawable/ic_add_meal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/logButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_add_meal"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="visible"/>
+
+            <!-- STATE: LOADING -->
+            <ProgressBar
+                android:id="@+id/progressLoading"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:indeterminateTint="#838DE7" />
+
+            <!-- STATE: SUCCESS -->
+            <ImageView
+                android:id="@+id/iconCheck"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_check"
+                android:scaleType="centerInside"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

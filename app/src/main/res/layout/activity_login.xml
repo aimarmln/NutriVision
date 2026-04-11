@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="16dp">
+    android:fitsSystemWindows="true">
 
-    <ImageView
-        android:id="@+id/backButton"
-        android:layout_width="48dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/back_button_content_description"
-        app:layout_constraintStart_toStartOf="parent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        app:elevation="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_back" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSurface"
+            app:navigationIcon="@drawable/ic_back" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
         app:layout_constraintVertical_bias="0.15">
 
         <TextView
@@ -61,17 +70,18 @@
         android:id="@+id/LinearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="203dp"
-        android:layout_marginBottom="172dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+        app:layout_constraintVertical_bias="0.5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp">
 
             <TextView
                 android:id="@+id/textView6"
@@ -92,15 +102,15 @@
                 android:layout_height="24dp"
                 android:layout_marginTop="17dp"
                 android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/edtEmailLogin"
-                app:layout_constraintEnd_toEndOf="@+id/edtEmailLogin"
+                app:layout_constraintBottom_toBottomOf="@+id/edtEmail"
+                app:layout_constraintEnd_toEndOf="@+id/edtEmail"
                 app:layout_constraintHorizontal_bias="0.056"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtEmailLogin"
+                app:layout_constraintTop_toTopOf="@+id/edtEmail"
                 app:srcCompat="@drawable/ic_email" />
 
             <EditText
-                android:id="@+id/edtEmailLogin"
+                android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_marginTop="8dp"
@@ -112,10 +122,26 @@
                 android:paddingStart="72dp"
                 android:paddingEnd="24dp"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/hanken_grotesk"
+                android:text="@string/login_password"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+
             <EditText
-                android:id="@+id/edtPasswordLogin"
+                android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_marginTop="8dp"
@@ -131,31 +157,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/hanken_grotesk"
-                android:text="@string/login_password"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtEmailLogin" />
-
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="17dp"
-                app:layout_constraintBottom_toBottomOf="@+id/edtPasswordLogin"
-                app:layout_constraintEnd_toEndOf="@+id/edtPasswordLogin"
+                app:layout_constraintBottom_toBottomOf="@+id/edtPassword"
+                app:layout_constraintEnd_toEndOf="@+id/edtPassword"
                 app:layout_constraintHorizontal_bias="0.056"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtPasswordLogin"
+                app:layout_constraintTop_toTopOf="@+id/edtPassword"
                 app:srcCompat="@drawable/ic_password" />
 
             <ImageView
@@ -164,12 +176,12 @@
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/edtPasswordLogin"
-                app:layout_constraintTop_toTopOf="@+id/edtPasswordLogin"
+                app:layout_constraintEnd_toEndOf="@+id/edtPassword"
+                app:layout_constraintTop_toTopOf="@+id/edtPassword"
                 app:srcCompat="@drawable/ic_eye_slash" />
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
+                android:id="@+id/linearLayout3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -177,7 +189,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtPasswordLogin">
+                app:layout_constraintTop_toBottomOf="@+id/edtPassword">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -195,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/hanken_grotesk_bold"
-                    android:text="@string/login_signup"
+                    android:text="@string/login_register"
                     android:textColor="@color/purple_tint"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -215,15 +227,16 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LinearLayout2" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
-        android:layout_width="345dp"
+        android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="16dp"
         android:background="@drawable/button_gradient"
         android:fontFamily="@font/hanken_grotesk_bold"
         android:text="@string/btn_login"

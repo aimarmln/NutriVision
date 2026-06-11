@@ -7,6 +7,6 @@ class CommentRepository(
     private val commentService: CommentService
 ) {
 
-    suspend fun deleteComment(commentId: String) =
+    suspend fun deleteComment(commentId: Int) =
         commentService.deleteComment(commentId).toResult()
 }

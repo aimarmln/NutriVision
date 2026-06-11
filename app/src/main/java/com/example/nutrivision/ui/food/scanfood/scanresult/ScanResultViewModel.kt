@@ -65,7 +65,7 @@ class ScanResultViewModel @Inject constructor(
     }
 
     private fun updateItem(
-        foodId: String,
+        foodId: Int,
         transform: (FoodListItem.Item) -> FoodListItem.Item
     ) {
         currentList = currentList.map {

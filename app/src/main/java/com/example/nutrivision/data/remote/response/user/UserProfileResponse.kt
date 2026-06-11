@@ -17,7 +17,7 @@ data class UserProfileResponse(
     @SerializedName("height_cm")
     val heightCm: Int,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("main_goal")
     val mainGoal: String,
     @SerializedName("name")

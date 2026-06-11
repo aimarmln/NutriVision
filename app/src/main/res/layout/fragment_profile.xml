@@ -13,15 +13,8 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
         android:backgroundTint="@color/purple_gradient_start"
         app:elevation="0dp">
-
-        <View
-            android:id="@+id/statusBarBackground"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/purple_gradient_start" />
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -99,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -317,6 +311,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"

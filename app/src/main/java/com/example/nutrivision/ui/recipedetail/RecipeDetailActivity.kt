@@ -20,7 +20,7 @@ class RecipeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeDetailBinding
     private val viewModel: RecipeDetailViewModel by viewModels()
     private lateinit var adapter: RecipeDetailAdapter
-    private lateinit var recipeId: String
+    private var recipeId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,7 +135,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         viewModel.fetchComments(recipeId)
     }
 
-    private fun recipeId(): String = requireNotNull(intent.getStringExtra(EXTRA_ID))
+    private fun recipeId(): Int = intent.getIntExtra(EXTRA_ID, 0)
 
     private fun setupInfiniteScroll() {
         binding.rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {

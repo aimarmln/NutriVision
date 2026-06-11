@@ -9,13 +9,13 @@ data class PostCommentResponse(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("recipe_id")
-    val recipeId: String,
+    val recipeId: Int,
     @SerializedName("sentiment")
     val sentiment: String,
     @SerializedName("user_id")
-    val userId: String,
+    val userId: Int,
     @SerializedName("user_name")
     val userName: String
 )

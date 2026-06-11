@@ -43,7 +43,8 @@ class ProfileFragment : Fragment() {
         setupWindowInsets()
         observeUiState()
         setupListeners()
-        fetchProfileIfRequired()
+
+        profileViewModel.fetchUserProfile()
 
         return binding.root
     }
@@ -51,11 +52,7 @@ class ProfileFragment : Fragment() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, 0)
-
-            binding.statusBarBackground.updateLayoutParams {
-                height = systemBars.top
-            }
-
+            binding.appBar.setPadding(0, systemBars.top, 0, 0)
             insets
         }
     }
@@ -211,19 +208,21 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun fetchProfileIfRequired() {
-        val state = profileViewModel.uiState.value
-
-        val isNotLoading = state !is ProfileUiState.Loading &&
-                state !is ProfileUiState.UpdateLoading &&
-                state !is ProfileUiState.LogoutLoading
-
-        val isNotSuccess = state !is ProfileUiState.Success
-
-        if (isNotLoading && isNotSuccess) {
-            profileViewModel.fetchUserProfile()
-        }
-    }
+//    private fun fetchProfileIfRequired() {
+//        val state = profileViewModel.uiState.value
+//
+//        val isNotLoading = state !is ProfileUiState.Loading &&
+//                state !is ProfileUiState.UpdateLoading &&
+//                state !is ProfileUiState.LogoutLoading
+//
+//        val isNotSuccess = state !is ProfileUiState.Success
+//
+//        if (isNotLoading && isNotSuccess) {
+//            profileViewModel.fetchUserProfile()
+//        }
+//
+//        profileViewModel.fetchUserProfile()
+//    }
 
     private fun validateUserProfileData(): UpdateUserProfileRequest? {
         val name = binding.edtName.text.toString().trim()

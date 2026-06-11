@@ -9,6 +9,6 @@ interface CommentService {
 
     @DELETE("/api/comments/{commentId}")
     suspend fun deleteComment(
-        @Path("commentId") commentId: String
+        @Path("commentId") commentId: Int
     ): Response<ApiResponse<Nothing, Unit>>
 }

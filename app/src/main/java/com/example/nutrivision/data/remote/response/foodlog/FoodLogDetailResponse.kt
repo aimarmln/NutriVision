@@ -14,7 +14,7 @@ data class FoodLogDetailResponse(
     @SerializedName("food_name")
     val foodName: String,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("meal_type")
     val mealType: String,
     @SerializedName("number_of_units")
@@ -22,7 +22,7 @@ data class FoodLogDetailResponse(
     @SerializedName("proteins")
     val proteins: Double,
     @SerializedName("serving_id")
-    val servingId: String,
+    val servingId: Int,
     @SerializedName("servings")
     val servings: List<Serving>
 )

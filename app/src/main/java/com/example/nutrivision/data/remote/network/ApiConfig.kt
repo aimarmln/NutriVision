@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiConfig {
 
-    private const val BASE_URL = "http://192.168.1.7:8000"
+    private const val BASE_URL = "http://192.168.1.5:8000"
 
     fun <T> createService(
         pref: SettingPreferences,
@@ -31,7 +31,7 @@ object ApiConfig {
 
         val client = OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(2, TimeUnit.MINUTES)
             .writeTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(AuthInterceptor(tokenManager))
             .authenticator(TokenAuthenticator(tokenManager, authServiceTemp))

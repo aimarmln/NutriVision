@@ -13,7 +13,7 @@ data class RecipesListResponseItem(
     @SerializedName("health_category")
     val healthCategory: String,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("image_path")
     val imagePath: String,
     @SerializedName("positive_comment_count")

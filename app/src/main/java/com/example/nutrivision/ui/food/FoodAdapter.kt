@@ -5,13 +5,11 @@ import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nutrivision.R
-import com.example.nutrivision.data.remote.response.food.FoodsListResponseItem
 import com.example.nutrivision.databinding.ItemFoodBinding
 import com.example.nutrivision.ui.food.FoodActivity.Companion.EXTRA_MEAL_TYPE
 import com.example.nutrivision.ui.food.fooddetail.FoodDetailActivity
@@ -24,9 +22,9 @@ import kotlin.math.roundToInt
 class FoodAdapter(
     private val mealType: String,
     private val onLogFood: (
-        foodId: String,
+        foodId: Int,
         mealType: String,
-        servingId: String,
+        servingId: Int,
         numberOfUnits: Float
     ) -> Unit
 ) : ListAdapter<FoodListItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
@@ -73,9 +71,9 @@ class FoodAdapter(
         private val binding: ItemFoodBinding,
         private val mealType: String,
         private val onLogFood: (
-            foodId: String,
+            foodId: Int,
             mealType: String,
-            servingId: String,
+            servingId: Int,
             numberOfUnits: Float
         ) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {

@@ -25,19 +25,19 @@ interface RecipeService {
 
     @GET("/api/recipes/{recipeId}")
     suspend fun getRecipeDetail(
-        @Path("recipeId") recipeId: String
+        @Path("recipeId") recipeId: Int
     ): Response<ApiResponse<RecipeDetailResponse, Unit>>
 
     @GET("/api/recipes/{recipeId}/comments")
     suspend fun getRecipeComments(
-        @Path("recipeId") recipeId: String,
+        @Path("recipeId") recipeId: Int,
         @Query("last_created_at") lastCreatedAt: String?,
         @Query("limit") limit: Int
     ): Response<ApiResponse<RecipeCommentsResponse, CursorPagination>>
 
     @POST("/api/recipes/{recipeId}/comments")
     suspend fun postRecipeComment(
-        @Path("recipeId") recipeId: String,
+        @Path("recipeId") recipeId: Int,
         @Body request: PostRecipeCommentRequest
     ): Response<ApiResponse<PostCommentResponse, Unit>>
 }

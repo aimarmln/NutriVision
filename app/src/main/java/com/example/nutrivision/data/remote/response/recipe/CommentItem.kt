@@ -7,7 +7,7 @@ data class CommentItem(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("is_own_comment")
     val isOwnComment: Boolean,
     @SerializedName("name")

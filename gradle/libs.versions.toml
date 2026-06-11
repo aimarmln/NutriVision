@@ -5,7 +5,8 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
-material = "1.12.0"
+#material = "1.12.0"
+material = "1.14.0-alpha01"
 constraintlayout = "2.2.1"
 lifecycleLivedataKtx = "2.9.0"
 lifecycleViewmodelKtx = "2.9.0"
@@ -14,6 +15,7 @@ navigationUiKtx = "2.9.0"
 exifinterface = "1.4.1"
 activity = "1.8.0"
 foundationLayout = "1.10.6"
+camerax = "1.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +32,10 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "camerax" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -33,9 +33,9 @@ class FoodDetailActivity: AppCompatActivity() {
 
     private val foodDetailViewModel: FoodDetailViewModel by viewModels()
 
-    private lateinit var foodId: String
+    private var foodId: Int = 0
     private lateinit var mealType: String
-    private lateinit var servingId: String
+    private var servingId: Int = 0
     private var numberOfUnits: Float = 0f
 
     private var currentFood: FoodDetailResponse? = null
@@ -57,9 +57,9 @@ class FoodDetailActivity: AppCompatActivity() {
     }
 
     private fun getDataFromIntent() {
-        foodId = requireNotNull(intent.getStringExtra(EXTRA_FOOD_ID))
+        foodId = intent.getIntExtra(EXTRA_FOOD_ID, 0)
         mealType = requireNotNull(intent.getStringExtra(EXTRA_MEAL_TYPE))
-        servingId = requireNotNull(intent.getStringExtra(EXTRA_SERVING_ID))
+        servingId = intent.getIntExtra(EXTRA_SERVING_ID, 0)
         numberOfUnits = intent.getFloatExtra(EXTRA_NUMBER_OF_UNITS, 0f)
     }
 

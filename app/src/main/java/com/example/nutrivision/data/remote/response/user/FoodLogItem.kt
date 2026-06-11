@@ -7,9 +7,9 @@ data class FoodLogItem(
     @SerializedName("calories")
     val calories: Int,
     @SerializedName("food_id")
-    val foodId: String,
+    val foodId: Int,
     @SerializedName("food_log_id")
-    val foodLogId: String,
+    val foodLogId: Int,
     @SerializedName("food_name")
     val foodName: String
 )

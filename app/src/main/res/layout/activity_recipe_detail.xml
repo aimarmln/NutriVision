@@ -11,13 +11,14 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:liftOnScroll="false"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorSurface"
+            android:background="@color/white"
             app:navigationIcon="@drawable/ic_back"
             app:title="@string/recipe_details_title"
             app:titleCentered="true"

@@ -118,6 +118,7 @@
     <string name="meal_type">Breakfast</string>
     <string name="meal_search_placeholder">What\'s on your plate?</string>
     <string name="meal_scan_a_meal">Scan a Meal</string>
+    <string name="meal_chat_assistant">AI Assistant</string>
 
     <string name="food_name">Ayam Bakar</string>
     <string name="food_info">188 Kcal . 100g | C: 0.0g . P: 28.7g . F: 7.4g</string>
@@ -162,6 +163,13 @@
     <string name="food_details_weight">100</string>
     <string name="food_details_grams">Grams (g)</string>
     <string name="food_details_log_food">Log</string>
+
+    <!--  Chat Activity  -->
+    <string name="chat_title">AI Assistant</string>
+    <string name="chat_hint_1">Saya makan ayam goreng dan nasi</string>
+    <string name="chat_hint_2">Berapa gizi telur dadar</string>
+    <string name="chat_hint_3">Saya turun 2 Kg</string>
+    <string name="chat_hint_4">Saya mau bulking</string>
 
     <!--  Recipe Fragment  -->
     <string name="recipe_title">Recipes</string>

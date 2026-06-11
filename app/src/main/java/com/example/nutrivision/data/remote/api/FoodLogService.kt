@@ -20,17 +20,17 @@ interface FoodLogService {
 
     @GET("/api/food-logs/{foodLogId}")
     suspend fun getFoodLogDetail(
-        @Path("foodLogId") foodLogId: String
+        @Path("foodLogId") foodLogId: Int
     ): Response<ApiResponse<FoodLogDetailResponse, Unit>>
 
     @PUT("/api/food-logs/{foodLogId}")
     suspend fun updateFoodLog(
-        @Path("foodLogId") foodLogId: String,
+        @Path("foodLogId") foodLogId: Int,
         @Body request: UpdateFoodLogRequest
     ): Response<ApiResponse<Unit, Unit>>
 
     @DELETE("/api/food-logs/{foodLogId}")
     suspend fun deleteFoodLog(
-        @Path("foodLogId") foodLogId: String
+        @Path("foodLogId") foodLogId: Int
     ): Response<ApiResponse<Unit, Unit>>
 }

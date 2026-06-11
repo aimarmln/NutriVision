@@ -5,29 +5,20 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nutrivision.data.local.SettingPreferences
-import com.example.nutrivision.data.local.dataStore
-import com.example.nutrivision.data.remote.api.FoodLogService
-import com.example.nutrivision.data.remote.api.FoodService
-import com.example.nutrivision.data.remote.network.ApiConfig
 import com.example.nutrivision.data.remote.request.foodlog.LogFoodRequest
-import com.example.nutrivision.data.repository.FoodLogRepository
-import com.example.nutrivision.data.repository.FoodRepository
 import com.example.nutrivision.databinding.ActivityFoodBinding
+import com.example.nutrivision.ui.chat.ChatActivity
 import com.example.nutrivision.ui.food.scanfood.ScanFoodActivity
 import com.example.nutrivision.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-//import com.example.nutrivision.ui.food.fooddetail.FoodDetailActivity
-//import com.example.nutrivision.ui.food.detectfood.ScanMealActivity
-//import com.example.nutrivision.ui.food.fooddetail.FoodDetailActivity.Companion.EXTRA_FOOD_ID
-//import com.example.nutrivision.ui.food.fooddetail.FoodDetailActivity.Companion.EXTRA_NUMBER_OF_UNITS
-//import com.example.nutrivision.ui.food.fooddetail.FoodDetailActivity.Companion.EXTRA_SERVING_ID
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -47,9 +38,16 @@ class FoodActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         binding = ActivityFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            insets
+        }
+
 
         setupUI()
         setupRecyclerView()
@@ -65,6 +63,7 @@ class FoodActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.btnScan.setOnClickListener { navigateToScanFoodActivity(mealType) }
+        binding.btnChatAi.setOnClickListener { navigateToChatAiActivity() }
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -91,7 +90,7 @@ class FoodActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         foodsAdapter = FoodAdapter(
             mealType = requireNotNull(intent.getStringExtra(EXTRA_MEAL_TYPE)),
-            onLogFood = { foodId: String, mealType: String, servingId: String, numberOfUnits: Float ->
+            onLogFood = { foodId: Int, mealType: String, servingId: Int, numberOfUnits: Float ->
                 foodViewModel.logFood(
                     LogFoodRequest(
                         foodId = foodId,
@@ -137,7 +136,7 @@ class FoodActivity : AppCompatActivity() {
                     foodsAdapter.submitList(state.data) {
                         binding.progressBar.visibility = View.GONE
 
-                        if (!state.isLoadMore) {
+                        if (state.shouldScrollToTop) {
                             binding.rvFoods.scrollToPosition(0)
                         }
 
@@ -165,6 +164,11 @@ class FoodActivity : AppCompatActivity() {
     private fun navigateToScanFoodActivity(mealType: String) {
         val intent = Intent(this, ScanFoodActivity::class.java)
         intent.putExtra(EXTRA_MEAL_TYPE, mealType)
+        startActivity(intent)
+    }
+
+    private fun navigateToChatAiActivity() {
+        val intent = Intent(this, ChatActivity::class.java)
         startActivity(intent)
     }
 }

@@ -16,7 +16,7 @@ data class Serving(
     @SerializedName("fats_g")
     val fatsG: Double,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("is_default")
     val isDefault: Boolean,
     @SerializedName("number_of_units")

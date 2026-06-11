@@ -24,7 +24,7 @@ import com.example.nutrivision.utils.toBulletList
 
 class RecipeDetailAdapter(
     private val onPostComment: (String) -> Unit,
-    private val onDeleteComment: (String) -> Unit,
+    private val onDeleteComment: (Int) -> Unit,
     private val onTextChanged: (String) -> Unit
 ) : ListAdapter<RecipeDetailListItem, RecyclerView.ViewHolder>(DiffCallback) {
 
@@ -253,7 +253,7 @@ class RecipeDetailAdapter(
 
     class CommentViewHolder(
         private val binding: ItemCommentBinding,
-        private val onDeleteComment: (String) -> Unit
+        private val onDeleteComment: (Int) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CommentListItem.Item) {

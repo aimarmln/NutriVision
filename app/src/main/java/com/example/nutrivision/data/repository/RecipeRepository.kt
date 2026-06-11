@@ -10,12 +10,12 @@ class RecipeRepository(
     suspend fun getRecipesList(q: String?, page: Int, limit: Int) =
         recipeService.getRecipesList(q, page, limit).toResult()
 
-    suspend fun getRecipeDetail(recipeId: String) =
+    suspend fun getRecipeDetail(recipeId: Int) =
         recipeService.getRecipeDetail(recipeId).toResult()
 
-    suspend fun getRecipeComments(recipeId: String, lastCreatedAt: String?, limit: Int) =
+    suspend fun getRecipeComments(recipeId: Int, lastCreatedAt: String?, limit: Int) =
         recipeService.getRecipeComments(recipeId, lastCreatedAt, limit).toResult()
 
-    suspend fun postRecipeComment(recipeId: String, body: PostRecipeCommentRequest) =
+    suspend fun postRecipeComment(recipeId: Int, body: PostRecipeCommentRequest) =
         recipeService.postRecipeComment(recipeId, body).toResult()
 }

@@ -36,7 +36,7 @@ class FoodDetailViewModel @Inject constructor(
     val currentNumOfUnits: LiveData<Float> = _currentNumOfUnits
 
 
-    fun fetchFoodDetail(foodId: String) {
+    fun fetchFoodDetail(foodId: Int) {
         _uiState.value = FoodDetailUiState.Loading
 
         viewModelScope.launch {

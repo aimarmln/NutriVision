@@ -3,18 +3,10 @@ package com.example.nutrivision.ui.food
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.nutrivision.data.local.SettingPreferences
-import com.example.nutrivision.data.local.dataStore
-import com.example.nutrivision.data.remote.network.ApiConfig
-import com.example.nutrivision.data.remote.request.FoodLogRequest
 import com.example.nutrivision.data.remote.request.foodlog.LogFoodRequest
-//import com.example.nutrivision.data.remote.response.FoodsResponseItem
-import com.example.nutrivision.data.remote.response.food.FoodsListResponseItem
 import com.example.nutrivision.data.repository.FoodLogRepository
 import com.example.nutrivision.data.repository.FoodRepository
-import com.example.nutrivision.ui.main.recipe.RecipeListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -43,7 +35,9 @@ class FoodViewModel @Inject constructor(
     ) {
         if (isLoadMore && (isLoadingPage || isLastPage)) return
 
-        if (!isLoadMore || query != currentQuery) {
+        val isNewSearch = query != currentQuery
+
+        if (!isLoadMore || isNewSearch) {
             currentPage = 1
             isLastPage = false
             accumulatedList.clear()
@@ -52,7 +46,8 @@ class FoodViewModel @Inject constructor(
             accumulatedList.add(FoodListItem.Loading)
             _uiState.value = FoodUiState.Success(
                 data = accumulatedList.toList(),
-                isLoadMore = true
+                isLoadMore = true,
+                shouldScrollToTop = false
             )
         }
 
@@ -84,7 +79,8 @@ class FoodViewModel @Inject constructor(
                 _uiState.value =
                     FoodUiState.Success(
                         data = accumulatedList.toList(),
-                        isLoadMore = isLoadMore
+                        isLoadMore = isLoadMore,
+                        shouldScrollToTop = isNewSearch
                     )
 
                 isLoadingPage = false
@@ -155,7 +151,7 @@ class FoodViewModel @Inject constructor(
     }
 
     private fun updateItemState(
-        foodId: String,
+        foodId: Int,
         transform: (FoodListItem.Item) -> FoodListItem.Item
     ) {
         val newList = accumulatedList.map {
@@ -167,7 +163,10 @@ class FoodViewModel @Inject constructor(
         accumulatedList.clear()
         accumulatedList.addAll(newList)
 
-        _uiState.value = FoodUiState.Success(accumulatedList.toList())
+        _uiState.value = FoodUiState.Success(
+            accumulatedList.toList(),
+            shouldScrollToTop = false
+        )
     }
 
     private fun removeLoadingFooter() {

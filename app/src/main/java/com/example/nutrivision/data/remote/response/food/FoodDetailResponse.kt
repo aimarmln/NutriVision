@@ -11,7 +11,7 @@ data class FoodDetailResponse(
     @SerializedName("food_subcategory")
     val foodSubcategory: String,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("servings")
     val servings: List<Serving>
 )

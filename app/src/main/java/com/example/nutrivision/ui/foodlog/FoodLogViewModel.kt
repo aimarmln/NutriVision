@@ -39,7 +39,7 @@ class FoodLogViewModel @Inject constructor(
     private val _currentNumOfUnits = MutableLiveData<Float>()
     val numOfUnits: LiveData<Float> = _currentNumOfUnits
 
-    fun fetchFoodLogDetail(foodLogId: String) {
+    fun fetchFoodLogDetail(foodLogId: Int) {
         _uiState.value = FoodLogUiState.Loading
 
         viewModelScope.launch {
@@ -54,7 +54,7 @@ class FoodLogViewModel @Inject constructor(
         }
     }
 
-    fun updateFoodLog(foodLogId: String, body: UpdateFoodLogRequest) {
+    fun updateFoodLog(foodLogId: Int, body: UpdateFoodLogRequest) {
         _updateState.value = UpdateFoodLogUiState.Loading
 
         viewModelScope.launch {
@@ -82,7 +82,7 @@ class FoodLogViewModel @Inject constructor(
         }
     }
 
-    fun deleteFoodLog(foodLogId: String) {
+    fun deleteFoodLog(foodLogId: Int) {
         _deleteState.value = DeleteFoodLogUiState.Loading
 
         viewModelScope.launch {

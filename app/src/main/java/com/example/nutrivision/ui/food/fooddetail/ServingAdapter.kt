@@ -12,9 +12,9 @@ class ServingAdapter(
     private val onClick: (Serving) -> Unit
 ) : ListAdapter<ServingItem, ServingAdapter.VH>(DIFF_CALLBACK) {
 
-    private var selectedId: String? = null
+    private var selectedId: Int? = null
 
-    fun setSelected(id: String) {
+    fun setSelected(id: Int) {
         selectedId = id
     }
 

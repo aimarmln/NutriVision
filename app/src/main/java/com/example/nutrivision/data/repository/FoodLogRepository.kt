@@ -1,7 +1,6 @@
 package com.example.nutrivision.data.repository
 
 import com.example.nutrivision.data.remote.api.FoodLogService
-import com.example.nutrivision.data.remote.request.FoodLogRequest
 import com.example.nutrivision.data.remote.request.foodlog.LogFoodRequest
 import com.example.nutrivision.data.remote.request.foodlog.UpdateFoodLogRequest
 import com.example.nutrivision.data.remote.response.ApiResponse
@@ -15,12 +14,12 @@ class FoodLogRepository(
     suspend fun logFood(body: LogFoodRequest) =
         foodLogService.logFood(body).toResult()
 
-    suspend fun getFoodLogDetail(foodLogId: String) =
+    suspend fun getFoodLogDetail(foodLogId: Int) =
         foodLogService.getFoodLogDetail(foodLogId).toResult()
 
-    suspend fun updateFoodLog(foodLogId: String, body: UpdateFoodLogRequest) =
+    suspend fun updateFoodLog(foodLogId: Int, body: UpdateFoodLogRequest) =
         foodLogService.updateFoodLog(foodLogId, body).toResult()
 
-    suspend fun deleteFoodLog(foodLogId: String) =
+    suspend fun deleteFoodLog(foodLogId: Int) =
         foodLogService.deleteFoodLog(foodLogId).toResult()
 }

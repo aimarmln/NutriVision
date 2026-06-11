@@ -9,7 +9,8 @@ sealed class FoodUiState {
 
     data class Success(
         val data: List<FoodListItem>,
-        val isLoadMore: Boolean = false
+        val isLoadMore: Boolean = false,
+        val shouldScrollToTop: Boolean = false
     ) : FoodUiState()
 
     data class Error(val message: String) : FoodUiState()

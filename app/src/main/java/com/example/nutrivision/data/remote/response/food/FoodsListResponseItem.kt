@@ -12,5 +12,5 @@ data class FoodsListResponseItem(
     @SerializedName("food_name")
     val foodName: String,
     @SerializedName("id")
-    val id: String
+    val id: Int
 ) : Parcelable

@@ -32,8 +32,8 @@ class FoodLogActivity: AppCompatActivity() {
         const val EXTRA_FOOD_LOG_ID = "extra_food_log_id"
     }
 
-    private lateinit var foodLogId : String
-    private lateinit var servingId : String
+    private var foodLogId : Int = 0
+    private var servingId : Int = 0
     private var currentFoodLog : FoodLogDetailResponse? = null
 
     private val foodLogViewModel: FoodLogViewModel by viewModels()
@@ -45,7 +45,7 @@ class FoodLogActivity: AppCompatActivity() {
         binding = ActivityFoodLogDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        foodLogId = requireNotNull(intent.getStringExtra(EXTRA_FOOD_LOG_ID))
+        foodLogId = intent.getIntExtra(EXTRA_FOOD_LOG_ID, 0)
 
         setupToolbar()
         setupClickListeners()

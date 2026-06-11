@@ -11,7 +11,7 @@ class FoodRepository(
     suspend fun getFoodsList(q: String?, page: Int, limit: Int) =
         foodService.getFoodsList(q, page, limit).toResult()
 
-    suspend fun getFoodDetail(foodId: String) =
+    suspend fun getFoodDetail(foodId: Int) =
         foodService.getFoodDetail(foodId).toResult()
 
     suspend fun detectFoods(image: MultipartBody.Part) =

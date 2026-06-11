@@ -7,5 +7,5 @@ data class UpdateFoodLogRequest(
     @SerializedName("number_of_units")
     val numberOfUnits: Float,
     @SerializedName("serving_id")
-    val servingId: String
+    val servingId: Int
 )

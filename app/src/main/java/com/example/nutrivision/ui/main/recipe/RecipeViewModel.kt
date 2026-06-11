@@ -94,5 +94,4 @@ class RecipeViewModel @Inject constructor(
             accumulatedList.removeAt(accumulatedList.lastIndex)
         }
     }
-
 }

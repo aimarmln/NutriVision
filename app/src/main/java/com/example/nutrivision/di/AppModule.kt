@@ -5,6 +5,7 @@ import com.example.nutrivision.data.local.SettingPreferences
 import com.example.nutrivision.data.local.TokenManager
 import com.example.nutrivision.data.local.dataStore
 import com.example.nutrivision.data.remote.api.AuthService
+import com.example.nutrivision.data.remote.api.ChatService
 import com.example.nutrivision.data.remote.api.CommentService
 import com.example.nutrivision.data.remote.api.FoodLogService
 import com.example.nutrivision.data.remote.api.FoodService
@@ -12,6 +13,7 @@ import com.example.nutrivision.data.remote.api.RecipeService
 import com.example.nutrivision.data.remote.api.UserService
 import com.example.nutrivision.data.remote.network.ApiConfig
 import com.example.nutrivision.data.repository.AuthRepository
+import com.example.nutrivision.data.repository.ChatRepository
 import com.example.nutrivision.data.repository.CommentRepository
 import com.example.nutrivision.data.repository.FoodLogRepository
 import com.example.nutrivision.data.repository.FoodRepository
@@ -22,6 +24,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.noties.markwon.Markwon
 import javax.inject.Singleton
 
 @Module
@@ -136,5 +139,29 @@ object AppModule {
         foodLogService: FoodLogService
     ): FoodLogRepository {
         return FoodLogRepository(foodLogService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatService(
+        pref: SettingPreferences
+    ): ChatService {
+        return ApiConfig.createService(pref, ChatService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatRepository(
+        chatService: ChatService
+    ): ChatRepository {
+        return ChatRepository(chatService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMarkwon(
+        @ApplicationContext context: Context
+    ): Markwon {
+        return Markwon.create(context)
     }
 }

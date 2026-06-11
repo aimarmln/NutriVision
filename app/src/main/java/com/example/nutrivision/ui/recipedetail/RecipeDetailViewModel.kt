@@ -33,13 +33,14 @@ class RecipeDetailViewModel @Inject constructor(
     private val _comments = MutableLiveData<List<CommentListItem>>(emptyList())
     val comments: LiveData<List<CommentListItem>> = _comments
 
+    private val accumulatedComments = mutableListOf<CommentListItem>()
+
     private var lastCursor: Cursor? = null
     private var isLastPage = false
     private var isLoading = false
-    private val accumulatedComments = mutableListOf<CommentListItem>()
 
     // Fetch recipe detail
-    fun fetchRecipeDetail(recipeId: String) {
+    fun fetchRecipeDetail(recipeId: Int) {
         _recipeUiState.value = RecipeDetailUiState.Loading
 
         viewModelScope.launch {
@@ -56,7 +57,7 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
     // Fetch comments (paginated)
-    fun fetchComments(recipeId: String, loadMore: Boolean = false) {
+    fun fetchComments(recipeId: Int, loadMore: Boolean = false) {
         if (loadMore && (isLoading || isLastPage)) return
 
         if (!loadMore) {
@@ -98,7 +99,7 @@ class RecipeDetailViewModel @Inject constructor(
         ) accumulatedComments.removeAt(accumulatedComments.lastIndex)
     }
 
-    fun postComment(recipeId: String, body: PostRecipeCommentRequest) {
+    fun postComment(recipeId: Int, body: PostRecipeCommentRequest) {
         _postCommentState.value = PostCommentState.Loading
 
         viewModelScope.launch {
@@ -145,7 +146,7 @@ class RecipeDetailViewModel @Inject constructor(
         }
     }
 
-    fun deleteComment(commentId: String) {
+    fun deleteComment(commentId: Int) {
         val updated = accumulatedComments.map {
             if (it is CommentListItem.Item && it.data.id == commentId) {
                 it.copy(isDeleting = true)

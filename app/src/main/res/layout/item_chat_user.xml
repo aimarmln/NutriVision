@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_chat_user"
+        android:textColor="@android:color/white"
+        tools:text="Saya makan ayam bakar dan nasi siang ini"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:maxWidth="280dp"/>
+</LinearLayout>

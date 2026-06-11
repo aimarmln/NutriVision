@@ -81,7 +81,7 @@ class ScanResultActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         foodsAdapter = FoodAdapter(
             mealType = mealType,
-            onLogFood = { foodId: String, mealType: String, servingId: String, numberOfUnits: Float ->
+            onLogFood = { foodId: Int, mealType: String, servingId: Int, numberOfUnits: Float ->
                 scanResultViewModel.logFood(
                     LogFoodRequest(
                         foodId = foodId,

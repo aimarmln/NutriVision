@@ -23,7 +23,7 @@ interface FoodService {
 
     @GET("/api/foods/{foodId}")
     suspend fun getFoodDetail(
-        @Path("foodId") foodId: String
+        @Path("foodId") foodId: Int
     ): Response<ApiResponse<FoodDetailResponse, Unit>>
 
     @Multipart

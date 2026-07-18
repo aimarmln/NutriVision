@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
-            android:text="@string/recipe_no_recipe"
+            android:text="No chat history"
             android:fontFamily="@font/hanken_grotesk"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"

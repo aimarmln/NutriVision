@@ -30,7 +30,8 @@ class ScanResultActivity : AppCompatActivity() {
     private lateinit var foodsAdapter: FoodAdapter
 
     private var scanResults: List<FoodsListResponseItem> = emptyList()
-    private lateinit var imagePath: String
+//    private lateinit var imagePath: String
+    private var imagePath: Int = 0
     private lateinit var mealType: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,8 @@ class ScanResultActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        imagePath = requireNotNull(intent.getStringExtra(EXTRA_IMAGE_PATH))
+        imagePath = requireNotNull(intent.getIntExtra(EXTRA_IMAGE_PATH, 0))
+//        imagePath = requireNotNull(intent.getStringExtra(EXTRA_IMAGE_PATH))
         mealType = requireNotNull(intent.getStringExtra(EXTRA_MEAL_TYPE))
 
         val result = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
@@ -108,16 +110,20 @@ class ScanResultActivity : AppCompatActivity() {
     }
 
     private fun handleImage() {
-        if (imagePath.isNotEmpty()) {
-            val bitmap = BitmapFactory.decodeFile(imagePath)
-            binding.scanImage.setImageBitmap(bitmap)
-
-            val imageFile = File(imagePath)
-            if (imageFile.exists()) {
-                imageFile.delete()
-                Log.d("ScanResultsActivity", "Image cache deleted: $imagePath")
-            }
+        if (imagePath != 0) {
+            binding.scanImage.setImageResource(imagePath)
         }
+
+//        if (imagePath.isNotEmpty()) {
+//            val bitmap = BitmapFactory.decodeFile(imagePath)
+//            binding.scanImage.setImageBitmap(bitmap)
+//
+//            val imageFile = File(imagePath)
+//            if (imageFile.exists()) {
+//                imageFile.delete()
+//                Log.d("ScanResultsActivity", "Image cache deleted: $imagePath")
+//            }
+//        }
 
         clearImageCache()
     }

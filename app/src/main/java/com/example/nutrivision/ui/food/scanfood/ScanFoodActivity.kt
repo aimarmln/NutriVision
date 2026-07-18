@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.example.nutrivision.R
 import com.example.nutrivision.databinding.ActivityScanFoodBinding
 import com.example.nutrivision.ui.food.FoodActivity.Companion.EXTRA_MEAL_TYPE
 import com.example.nutrivision.ui.food.scanfood.scanresult.ScanResultActivity
@@ -87,7 +88,8 @@ class ScanFoodActivity : AppCompatActivity() {
                         ArrayList(state.data)
                     )
 
-                    intent.putExtra(EXTRA_IMAGE_PATH, imageFilePath)
+                    intent.putExtra(EXTRA_IMAGE_PATH, R.drawable.nasi_ayam_bakar)
+//                    intent.putExtra(EXTRA_IMAGE_PATH, imageFilePath)
                     intent.putExtra(EXTRA_MEAL_TYPE, mealType)
                     startActivity(intent)
 
@@ -110,8 +112,9 @@ class ScanFoodActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         binding.btnScan.setOnClickListener {
-            freezeCameraPreview()
-            takePhotoAndDetect()
+            sendDummyImageToApi()
+//            freezeCameraPreview()
+//            takePhotoAndDetect()
         }
     }
 
@@ -252,6 +255,31 @@ class ScanFoodActivity : AppCompatActivity() {
             binding.freezeFrame.visibility = VISIBLE
             binding.previewView.visibility = INVISIBLE
         }
+    }
+
+    private fun drawableToFile(drawableResId: Int): File {
+        val bitmap = BitmapFactory.decodeResource(resources, drawableResId)
+
+        val file = File.createTempFile("dummy_food_", ".jpg", cacheDir)
+
+        FileOutputStream(file).use { outputStream ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+        }
+
+        bitmap.recycle()
+
+        return file
+    }
+
+    private fun sendDummyImageToApi() {
+        binding.progressBar.visibility = VISIBLE
+        binding.btnScan.isEnabled = false
+
+        val dummyFile = drawableToFile(R.drawable.nasi_ayam_bakar)
+
+        imageFilePath = dummyFile.absolutePath
+
+        scanFoodViewModel.detectFoods(dummyFile)
     }
 
     override fun onRequestPermissionsResult(
